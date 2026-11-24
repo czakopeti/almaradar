@@ -122,10 +122,12 @@
   function iphoneModel(t) {
     if (/iphone\s*duo\b/.test(t)) return 'iphone-duo';
     if (/iphone\s*(17\s*)?air\b/.test(t)) return 'iphone-air';
-    const m = t.match(/iphone\s*(1[2-8])\s*(e\b|mini|plus|pro max|pro)?/);
+    if (/iphone\s*se\b/.test(t)) return /2022|3\.?\s*(gen|generáció)|\bse\s*3\b/.test(t) ? 'iphone-se-3' : (/2020|2\.?\s*(gen|generáció)|\bse\s*2\b/.test(t) ? 'iphone-se-2' : null);
+    const m = t.match(/iphone\s*(1[1-8])\s*(e\b|mini|plus|pro max|pro)?/);
     if (!m) return null;
     const gen = m[1]; const v = (m[2] || '').trim();
     const suffix = { '': '', e: 'e', mini: '-mini', plus: '-plus', pro: '-pro', 'pro max': '-pro-max' }[v];
+    if (gen === '11' && (v === 'mini' || v === 'plus' || v === 'e')) return null;
     const id = 'iphone-' + gen + (suffix === 'e' ? 'e' : suffix);
     return id;
   }
@@ -137,16 +139,21 @@
       if (/\bm\s*3\b/.test(t)) return 'ipad-air-m3';
       if (/\bm\s*2\b|air\s*6\b|2024/.test(t)) return 'ipad-air-m2';
       if (/\bm\s*1\b|air\s*5\b/.test(t)) return 'ipad-air-m1';
+      if (/air\s*4\b|2020/.test(t)) return 'ipad-air-4';
       return null;
     }
     if (/ipad\s*mini/.test(t)) {
       if (/oled|2026|mini\s*8/.test(t)) return 'ipad-mini-oled';
       if (/a\s*17|2024|mini\s*7/.test(t)) return 'ipad-mini-a17';
+      if (/mini\s*6|2021/.test(t)) return 'ipad-mini-6';
       return null;
     }
     if (/ipad\s*pro/.test(t)) {
       if (/\bm\s*5\b/.test(t)) return 'ipad-pro-m5';
       if (/\bm\s*4\b/.test(t)) return 'ipad-pro-m4';
+      if (/\bm\s*2\b|2022|(5|6)\.?\s*(gen|generáció)/.test(t) && /12[.,]9|13"/.test(t)) return 'ipad-pro-m2';
+      if (/\bm\s*2\b|2022/.test(t)) return 'ipad-pro-m2';
+      if (/\bm\s*1\b|2021/.test(t)) return 'ipad-pro-m1';
       return null;
     }
     if (/\ba\s*16\b|11\s*(th|\.)?\s*gen|11\s*\.?\s*generáció|ipad\s*11\b|ipad\s*\(?2025|11"\s*\(?2025/.test(t)) return 'ipad-a16';
@@ -220,12 +227,21 @@
     return r;
   }
 
+  // telefonszám és e-mail eltávolítása a címből (személyes adat)
+  function scrub(s) {
+    return String(s || '')
+      .replace(/(\+?36|06)[\s\/-]*\(?\d{1,2}\)?[\s\/-]*\d{3}[\s\/-]*\d{3,4}/g, '')
+      .replace(/(tel|telefon|telfon|hívj|hivj)[^,;|]{0,25}\d{6,}/gi, '')
+      .replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, '')
+      .replace(/\s{2,}/g, ' ').trim();
+  }
+
   function parsePrice(s) {
     const m = String(s || '').replace(/[\u00a0\u202f\u2009]/g, ' ').match(/(\d{1,3}(?:[ .]\d{3})+|\d+)\s*(ft|huf)?/i);
     return m ? +m[1].replace(/[ .]/g, '') : null;
   }
 
-  const api = { parseListing, parsePrice, norm };
+  const api = { parseListing, parsePrice, norm, scrub };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.ALMA_PARSE = api;
 })(typeof window !== 'undefined' ? window : globalThis);

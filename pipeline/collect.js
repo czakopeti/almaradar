@@ -3,11 +3,13 @@
 // Udvarias: robots.txt-t ellenőriz, kérések között 6–9 mp szünet, oldalanként max. 2 lap.
 // Futtatás: node pipeline/collect.js   (Node 20+, külső csomag nélkül)
 'use strict';
+const { scrub } = require('../src/parse.js');
 const fs = require('fs');
 const path = require('path');
 
 const BASE = 'https://hardverapro.hu';
 const CATEGORIES = [
+  '/aprok/mobil/mobil/iphone/iphone_11/index.html',
   '/aprok/mobil/mobil/iphone/iphone_12_2/index.html',
   '/aprok/mobil/mobil/iphone/iphone_13_2/index.html',
   '/aprok/mobil/mobil/iphone/iphone_14_2/index.html',
@@ -77,7 +79,7 @@ function extract(html) {
     if (!price) return;
     const text = strip(block);
     const dm = text.match(/\b(ma|tegnap)\s+\d{1,2}:\d{2}|\d{4}-\d{2}-\d{2}/);
-    out.push({ title: r.title, price, date: dm ? dm[0] : '', frozen: /jegelve/i.test(text.slice(0, 400)), url: r.url });
+    out.push({ title: scrub(r.title), price, date: dm ? dm[0] : '', frozen: /jegelve/i.test(text.slice(0, 400)), url: r.url });
   });
   return out.filter(x => !/^keres|^vennék|^veszek/i.test(x.title));
 }

@@ -474,6 +474,11 @@ footer{padding-block:28px 48px;border-top:1px solid var(--line);color:var(--mute
 
   const models = [
     // ---------- iPhone ----------
+    M('iphone-se-2', 'iphone', 'iPhone SE (2020)', 2020.3, { variant: 'e', base: 64 }),
+    M('iphone-se-3', 'iphone', 'iPhone SE (2022)', 2022.2, { variant: 'e', base: 64 }),
+    M('iphone-11', 'iphone', 'iPhone 11', 2019.7, { variant: 'base', base: 64 }),
+    M('iphone-11-pro', 'iphone', 'iPhone 11 Pro', 2019.7, { variant: 'pro', base: 64 }),
+    M('iphone-11-pro-max', 'iphone', 'iPhone 11 Pro Max', 2019.7, { variant: 'promax', base: 64 }),
     M('iphone-12', 'iphone', 'iPhone 12', 2020.8, { variant: 'base', base: 64 }),
     M('iphone-12-mini', 'iphone', 'iPhone 12 mini', 2020.85, { variant: 'mini', base: 64 }),
     M('iphone-12-pro', 'iphone', 'iPhone 12 Pro', 2020.8, { variant: 'pro', base: 128 }),
@@ -518,14 +523,18 @@ footer{padding-block:28px 48px;border-top:1px solid var(--line);color:var(--mute
     M('ipad-10', 'ipad', 'iPad (10. gen)', 2022.8, { variant: 'base', base: 64 }),
     M('ipad-a16', 'ipad', 'iPad (A16, 11. gen)', 2025.2, { variant: 'base', base: 128, sold: true,
       apple: { 128: 209990, 256: 259990, 512: 359990 } }),
+    M('ipad-air-4', 'ipad', 'iPad Air 4', 2020.8, { variant: 'air', base: 64 }),
     M('ipad-air-m1', 'ipad', 'iPad Air 5 (M1)', 2022.2, { variant: 'air', base: 64 }),
     M('ipad-air-m2', 'ipad', 'iPad Air (M2)', 2024.4, { variant: 'air', base: 128 }),
     M('ipad-air-m3', 'ipad', 'iPad Air (M3)', 2025.2, { variant: 'air', base: 128 }),
     M('ipad-air-m4', 'ipad', 'iPad Air (M4)', 2026.2, { variant: 'air', base: 128, sold: true,
       apple: { 128: 349990 } }),
+    M('ipad-mini-6', 'ipad', 'iPad mini 6', 2021.7, { variant: 'mini', base: 64 }),
     M('ipad-mini-a17', 'ipad', 'iPad mini (A17 Pro)', 2024.8, { variant: 'mini', base: 128 }),
     M('ipad-mini-oled', 'ipad', 'iPad mini (OLED, 2026)', 2026.8, { variant: 'mini', base: 128, sold: true, approx: true,
       apple: { 128: 329990 } }),
+    M('ipad-pro-m1', 'ipad', 'iPad Pro (M1, 2021)', 2021.4, { variant: 'pro', base: 128 }),
+    M('ipad-pro-m2', 'ipad', 'iPad Pro (M2, 2022)', 2022.8, { variant: 'pro', base: 128 }),
     M('ipad-pro-m4', 'ipad', 'iPad Pro (M4)', 2024.4, { variant: 'pro', base: 256 }),
     M('ipad-pro-m5', 'ipad', 'iPad Pro (M5)', 2025.8, { variant: 'pro', base: 256, sold: true, approx: true,
       apple: { 256: 549990 } }),
@@ -702,10 +711,12 @@ footer{padding-block:28px 48px;border-top:1px solid var(--line);color:var(--mute
   function iphoneModel(t) {
     if (/iphone\s*duo\b/.test(t)) return 'iphone-duo';
     if (/iphone\s*(17\s*)?air\b/.test(t)) return 'iphone-air';
-    const m = t.match(/iphone\s*(1[2-8])\s*(e\b|mini|plus|pro max|pro)?/);
+    if (/iphone\s*se\b/.test(t)) return /2022|3\.?\s*(gen|generáció)|\bse\s*3\b/.test(t) ? 'iphone-se-3' : (/2020|2\.?\s*(gen|generáció)|\bse\s*2\b/.test(t) ? 'iphone-se-2' : null);
+    const m = t.match(/iphone\s*(1[1-8])\s*(e\b|mini|plus|pro max|pro)?/);
     if (!m) return null;
     const gen = m[1]; const v = (m[2] || '').trim();
     const suffix = { '': '', e: 'e', mini: '-mini', plus: '-plus', pro: '-pro', 'pro max': '-pro-max' }[v];
+    if (gen === '11' && (v === 'mini' || v === 'plus' || v === 'e')) return null;
     const id = 'iphone-' + gen + (suffix === 'e' ? 'e' : suffix);
     return id;
   }
@@ -717,16 +728,21 @@ footer{padding-block:28px 48px;border-top:1px solid var(--line);color:var(--mute
       if (/\bm\s*3\b/.test(t)) return 'ipad-air-m3';
       if (/\bm\s*2\b|air\s*6\b|2024/.test(t)) return 'ipad-air-m2';
       if (/\bm\s*1\b|air\s*5\b/.test(t)) return 'ipad-air-m1';
+      if (/air\s*4\b|2020/.test(t)) return 'ipad-air-4';
       return null;
     }
     if (/ipad\s*mini/.test(t)) {
       if (/oled|2026|mini\s*8/.test(t)) return 'ipad-mini-oled';
       if (/a\s*17|2024|mini\s*7/.test(t)) return 'ipad-mini-a17';
+      if (/mini\s*6|2021/.test(t)) return 'ipad-mini-6';
       return null;
     }
     if (/ipad\s*pro/.test(t)) {
       if (/\bm\s*5\b/.test(t)) return 'ipad-pro-m5';
       if (/\bm\s*4\b/.test(t)) return 'ipad-pro-m4';
+      if (/\bm\s*2\b|2022|(5|6)\.?\s*(gen|generáció)/.test(t) && /12[.,]9|13"/.test(t)) return 'ipad-pro-m2';
+      if (/\bm\s*2\b|2022/.test(t)) return 'ipad-pro-m2';
+      if (/\bm\s*1\b|2021/.test(t)) return 'ipad-pro-m1';
       return null;
     }
     if (/\ba\s*16\b|11\s*(th|\.)?\s*gen|11\s*\.?\s*generáció|ipad\s*11\b|ipad\s*\(?2025|11"\s*\(?2025/.test(t)) return 'ipad-a16';
@@ -800,12 +816,21 @@ footer{padding-block:28px 48px;border-top:1px solid var(--line);color:var(--mute
     return r;
   }
 
+  // telefonszám és e-mail eltávolítása a címből (személyes adat)
+  function scrub(s) {
+    return String(s || '')
+      .replace(/(\+?36|06)[\s\/-]*\(?\d{1,2}\)?[\s\/-]*\d{3}[\s\/-]*\d{3,4}/g, '')
+      .replace(/(tel|telefon|telfon|hívj|hivj)[^,;|]{0,25}\d{6,}/gi, '')
+      .replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, '')
+      .replace(/\s{2,}/g, ' ').trim();
+  }
+
   function parsePrice(s) {
     const m = String(s || '').replace(/[\u00a0\u202f\u2009]/g, ' ').match(/(\d{1,3}(?:[ .]\d{3})+|\d+)\s*(ft|huf)?/i);
     return m ? +m[1].replace(/[ .]/g, '') : null;
   }
 
-  const api = { parseListing, parsePrice, norm };
+  const api = { parseListing, parsePrice, norm, scrub };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.ALMA_PARSE = api;
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -868,7 +893,7 @@ footer{padding-block:28px 48px;border-top:1px solid var(--line);color:var(--mute
     const variantKnown = m.variant === ref || ('v_' + m.variant) in c.beta;
     const seen = c.modelIds.includes(p.modelId);
     return {
-      reliable: seen || (variantKnown && (coef.today - m.rel) >= (c.ageMin || 0) - 0.15),
+      reliable: seen || (variantKnown && (coef.today - m.rel) >= (c.ageMin || 0) - 0.15 && (coef.today - m.rel) <= (c.ageMax || 99) + 0.3),
       fair,
       low: fair * Math.exp(-0.674 * c.sigma),
       high: fair * Math.exp(0.674 * c.sigma),

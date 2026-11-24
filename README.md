@@ -42,6 +42,20 @@ Külső csomag nem kell, csak Node 20.
 3. GitHub → a repó **Actions** füle → *Napi frissítés* → **Run workflow**. Ezzel kipróbálod az első gyűjtést.
    Utána minden reggel magától fut.
 
+## A gyűjtők állapota (2026-11-24, első éles futás)
+
+| Forrás | Állapot |
+|---|---|
+| Hardverapró (használt) | működik, kb. 1700 hirdetés naponta |
+| iStyle (új) | működik (Shopify JSON), kb. 260 ajánlat |
+| iBerry (felújított) | működik (WooCommerce API), kb. 70 ajánlat |
+| Alza, eMAG | letiltják az automatikus lekérést, ezt tiszteletben tartjuk: partnerprogram-feed kell |
+| iCentre, Rejoy | az oldal JavaScriptből tölti az árakat, a sima lekérés üres: feed vagy fejléc nélküli böngésző kell |
+| MediaMarkt | a kategória-címeket pontosítani kell |
+
+A ki nem gyűjthető boltok kézzel rögzített árai (`shops_manual.json`) legfeljebb 7 napig látszanak, utána eltűnnek.
+Hibakereséshez az Actions fülön a **Gyűjtő-teszt** futtatás a letöltött HTML-t mellékletként elmenti.
+
 ## Fontos tudnivalók
 
 - A gyűjtő csak nyilvános adatot ment: címet, árat, dátumot és linket. Személyes adatot (név, telefonszám, kép) nem tárol, és minden sor az eredeti hirdetésre mutat.

@@ -124,29 +124,32 @@
    "ageMin": 0.7,
    "ageMax": 8.7,
    "beta": {
-    "const": 12.21541,
-    "age": -0.17588,
-    "age2": -0.00468,
-    "v_air": 0.45048,
-    "v_pro": 1.05971,
-    "storage": 0.11011,
-    "dealer": 0.06819,
-    "isNew": 0.11302,
-    "gradeA": 0.03253,
-    "cellular": 0.09121,
-    "m_ipad-10": -0.02276,
-    "m_ipad-6": 0.00176,
-    "m_ipad-7": 0.0573,
-    "m_ipad-8": -0.13418,
-    "m_ipad-9": 0.08493,
-    "m_ipad-a16": -0.01223,
-    "m_ipad-air-m1": 0.00171,
-    "m_ipad-air-m2": 0.00811,
-    "m_ipad-air-m3": 0.02741,
-    "m_ipad-air-m4": -0.02972,
-    "m_ipad-pro-m5": 0.01766
+    "const": 12.18983,
+    "age": -0.16496,
+    "age2": -0.00554,
+    "v_air": 0.47024,
+    "v_mini": 0.47273,
+    "v_pro": 1.09674,
+    "storage": 0.11558,
+    "dealer": 0.07497,
+    "isNew": 0.10875,
+    "gradeA": 0.01774,
+    "cellular": 0.08112,
+    "m_ipad-10": -0.02545,
+    "m_ipad-6": -0.0005,
+    "m_ipad-7": 0.05197,
+    "m_ipad-8": -0.14033,
+    "m_ipad-9": 0.08076,
+    "m_ipad-a16": -0.00043,
+    "m_ipad-air-4": 0.02529,
+    "m_ipad-air-m1": -0.01143,
+    "m_ipad-air-m2": 0.00102,
+    "m_ipad-air-m3": 0.02342,
+    "m_ipad-air-m4": -0.03046,
+    "m_ipad-mini-6": 0.00788,
+    "m_ipad-pro-m5": 0.01828
    },
-   "sigma": 0.1332,
+   "sigma": 0.1335,
    "modelIds": [
     "ipad-10",
     "ipad-6",
@@ -154,10 +157,12 @@
     "ipad-8",
     "ipad-9",
     "ipad-a16",
+    "ipad-air-4",
     "ipad-air-m1",
     "ipad-air-m2",
     "ipad-air-m3",
     "ipad-air-m4",
+    "ipad-mini-6",
     "ipad-pro-m5"
    ],
    "counts": {
@@ -167,14 +172,16 @@
     "ipad-6": 8,
     "ipad-10": 6,
     "ipad-7": 3,
+    "ipad-mini-6": 1,
     "ipad-pro-m5": 1,
     "ipad-air-m3": 9,
     "ipad-air-m4": 19,
     "ipad-air-m2": 4,
+    "ipad-air-4": 6,
     "ipad-air-m1": 4
    },
-   "nFit": 105,
-   "nAll": 108
+   "nFit": 111,
+   "nAll": 115
   },
   "mac": {
    "ageMin": 0.7,
@@ -241,6 +248,45 @@
   }
  },
  "models": {
+  "iphone-se-2": {
+   "n": 0
+  },
+  "iphone-se-3": {
+   "n": 0,
+   "fair": 65000,
+   "low": 60200,
+   "high": 70100,
+   "seen": false,
+   "fairDealer": 87900,
+   "byStorage": {
+    "64": 65000
+   }
+  },
+  "iphone-11": {
+   "n": 0,
+   "bestRefurb": {
+    "price": 44900,
+    "shop": "iBerry",
+    "storage": 64,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-11/",
+    "from": true
+   },
+   "offers": 1
+  },
+  "iphone-11-pro": {
+   "n": 0,
+   "bestRefurb": {
+    "price": 59900,
+    "shop": "iBerry",
+    "storage": 64,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-11-pro/",
+    "from": true
+   },
+   "offers": 1
+  },
+  "iphone-11-pro-max": {
+   "n": 0
+  },
   "iphone-12": {
    "n": 73,
    "fair": 55100,
@@ -891,81 +937,81 @@
   },
   "ipad-6": {
    "n": 8,
-   "fair": 30700,
-   "low": 28100,
-   "high": 33600,
+   "fair": 30800,
+   "low": 28200,
+   "high": 33700,
    "seen": true,
-   "fairDealer": 34000,
+   "fairDealer": 33800,
    "byStorage": {
-    "32": 30700,
-    "128": 38300
+    "32": 30800,
+    "128": 38800
    },
    "median": 35000,
    "min": 25000
   },
   "ipad-7": {
    "n": 4,
-   "fair": 47300,
-   "low": 43200,
-   "high": 51700,
+   "fair": 47400,
+   "low": 43400,
+   "high": 51900,
    "seen": true,
-   "fairDealer": 52300,
+   "fairDealer": 52100,
    "byStorage": {
-    "32": 47300
+    "32": 47400
    },
    "median": 49000,
    "min": 10000
   },
   "ipad-8": {
    "n": 14,
-   "fair": 49600,
-   "low": 45300,
-   "high": 54200,
+   "fair": 49700,
+   "low": 45400,
+   "high": 54400,
    "seen": true,
-   "fairDealer": 54800,
+   "fairDealer": 54600,
    "byStorage": {
-    "32": 49600
+    "32": 49700
    },
    "median": 50000,
    "min": 10000
   },
   "ipad-9": {
    "n": 16,
-   "fair": 77600,
-   "low": 71000,
-   "high": 84900,
+   "fair": 77900,
+   "low": 71200,
+   "high": 85300,
    "seen": true,
-   "fairDealer": 85900,
+   "fairDealer": 85500,
    "byStorage": {
-    "64": 77600,
-    "256": 96800
+    "64": 77900,
+    "256": 98200
    },
    "median": 85000,
    "min": 10000
   },
   "ipad-10": {
    "n": 7,
-   "fair": 88700,
-   "low": 81100,
-   "high": 97100,
+   "fair": 88900,
+   "low": 81300,
+   "high": 97300,
    "seen": true,
-   "fairDealer": 98100,
+   "fairDealer": 97500,
    "byStorage": {
-    "64": 88700
+    "64": 88900
    },
    "median": 89990,
    "min": 40000
   },
   "ipad-a16": {
    "n": 31,
-   "fair": 146000,
-   "low": 133400,
-   "high": 159700,
+   "fair": 146300,
+   "low": 133700,
+   "high": 160100,
    "seen": true,
-   "fairDealer": 161400,
+   "fairDealer": 160500,
    "byStorage": {
-    "128": 146000,
-    "256": 162900
+    "128": 146300,
+    "256": 164200
    },
    "median": 160000,
    "min": 115000,
@@ -978,44 +1024,58 @@
    "apple": 209990,
    "offers": 5
   },
+  "ipad-air-4": {
+   "n": 7,
+   "fair": 96100,
+   "low": 87900,
+   "high": 105200,
+   "seen": true,
+   "fairDealer": 105500,
+   "byStorage": {
+    "64": 96100,
+    "256": 121100
+   },
+   "median": 119900,
+   "min": 89900
+  },
   "ipad-air-m1": {
    "n": 5,
-   "fair": 125200,
-   "low": 114500,
-   "high": 137000,
+   "fair": 126900,
+   "low": 116000,
+   "high": 138900,
    "seen": true,
-   "fairDealer": 138500,
+   "fairDealer": 139300,
    "byStorage": {
-    "64": 125200,
-    "256": 156100
+    "64": 126900,
+    "256": 159900
    },
    "median": 139900,
    "min": 115000
   },
   "ipad-air-m2": {
    "n": 4,
-   "fair": 199900,
-   "low": 182700,
-   "high": 218600,
+   "fair": 201700,
+   "low": 184300,
+   "high": 220700,
    "seen": true,
-   "fairDealer": 221100,
+   "fairDealer": 221300,
    "byStorage": {
-    "128": 199900
+    "128": 201700
    },
    "median": 199000,
    "min": 190000
   },
   "ipad-air-m3": {
    "n": 12,
-   "fair": 238300,
-   "low": 217800,
-   "high": 260700,
+   "fair": 239800,
+   "low": 219100,
+   "high": 262300,
    "seen": true,
-   "fairDealer": 263500,
+   "fairDealer": 263100,
    "byStorage": {
-    "128": 238300,
-    "256": 266000,
-    "512": 297000
+    "128": 239800,
+    "256": 269100,
+    "512": 302100
    },
    "median": 259995,
    "min": 215000,
@@ -1029,15 +1089,15 @@
   },
   "ipad-air-m4": {
    "n": 19,
-   "fair": 271300,
-   "low": 248000,
-   "high": 296800,
+   "fair": 271500,
+   "low": 248200,
+   "high": 297100,
    "seen": true,
-   "fairDealer": 300100,
+   "fairDealer": 297900,
    "byStorage": {
-    "128": 271300,
-    "256": 302900,
-    "1024": 377500
+    "128": 271500,
+    "256": 304800,
+    "1024": 384000
    },
    "median": 319990,
    "min": 260000,
@@ -1050,8 +1110,29 @@
    "apple": 349990,
    "offers": 2
   },
+  "ipad-mini-6": {
+   "n": 1,
+   "fair": 116200,
+   "low": 106200,
+   "high": 127200,
+   "seen": true,
+   "fairDealer": 127500,
+   "byStorage": {
+    "64": 116200
+   },
+   "median": 119000,
+   "min": 119000
+  },
   "ipad-mini-a17": {
    "n": 0,
+   "fair": 218000,
+   "low": 199200,
+   "high": 238500,
+   "seen": false,
+   "fairDealer": 239100,
+   "byStorage": {
+    "128": 218000
+   },
    "bestNew": {
     "price": 213490,
     "shop": "Alza",
@@ -1071,26 +1152,48 @@
    "apple": 329990,
    "offers": 1
   },
+  "ipad-pro-m1": {
+   "n": 0,
+   "fair": 201200,
+   "low": 183900,
+   "high": 220200,
+   "seen": false,
+   "fairDealer": 220800,
+   "byStorage": {
+    "128": 201200
+   }
+  },
+  "ipad-pro-m2": {
+   "n": 0,
+   "fair": 273100,
+   "low": 249600,
+   "high": 298800,
+   "seen": false,
+   "fairDealer": 299600,
+   "byStorage": {
+    "128": 273100
+   }
+  },
   "ipad-pro-m4": {
    "n": 0,
-   "fair": 364600,
-   "low": 333300,
-   "high": 398900,
+   "fair": 377000,
+   "low": 344500,
+   "high": 412500,
    "seen": false,
-   "fairDealer": 403200,
+   "fairDealer": 413600,
    "byStorage": {
-    "256": 364600
+    "256": 377000
    }
   },
   "ipad-pro-m5": {
    "n": 1,
-   "fair": 486000,
-   "low": 444300,
-   "high": 531700,
+   "fair": 497300,
+   "low": 454600,
+   "high": 544200,
    "seen": true,
-   "fairDealer": 537500,
+   "fairDealer": 545700,
    "byStorage": {
-    "256": 486000
+    "256": 497300
    },
    "median": 579990,
    "min": 579990,
@@ -1388,15 +1491,15 @@
    "sigma": 0.1124
   },
   "ipad": {
-   "dealer": 7.1,
-   "isNew": 12,
+   "dealer": 7.8,
+   "isNew": 11.5,
    "batt10": 0,
-   "storageDouble": 11.6,
-   "gradeA": 3.3,
-   "perYear": -17.7,
-   "n": 108,
-   "nFit": 105,
-   "sigma": 0.1332
+   "storageDouble": 12.3,
+   "gradeA": 1.8,
+   "perYear": -17.1,
+   "n": 115,
+   "nFit": 111,
+   "sigma": 0.1335
   },
   "mac": {
    "dealer": 12.7,
@@ -1412,9 +1515,9 @@
  },
  "counts": {
   "raw": 1709,
-  "usable": 1458,
+  "usable": 1466,
   "skipped": {
-   "noModel": 164,
+   "noModel": 156,
    "accessory": 4,
    "multi": 33,
    "price": 2,
@@ -1423,7 +1526,7 @@
   },
   "byFamily": {
    "iphone": 1005,
-   "ipad": 121,
+   "ipad": 129,
    "mac": 332
   }
  },
@@ -1435,7 +1538,7 @@
   "iStyle",
   "iCentre"
  ],
- "nOffers": 154,
+ "nOffers": 163,
  "sources": [
   {
    "name": "Apple Magyarország (apple.com/hu)",

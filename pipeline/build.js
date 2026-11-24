@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const CAT = require('../src/catalog.js');
-const { parseListing, parsePrice } = require('../src/parse.js');
+const { parseListing, parsePrice, scrub } = require('../src/parse.js');
 const { predict, verdict } = require('../src/model.js');
 const { fitFamily, median } = require('./fit.js');
 
@@ -64,6 +64,8 @@ for (const full of haSrc.files) {
     for (const r of JSON.parse(fs.readFileSync(full, 'utf8'))) raw.push(Object.assign({ src: 'hardverapro', file: f }, r, { date: normDate(r.date) }));
   }
 }
+
+for (const r of raw) r.title = scrub(r.title);
 
 // ---- 2. értelmezés, szűrés, duplikátumok ----
 const seen = new Set();

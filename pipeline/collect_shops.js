@@ -6,6 +6,7 @@
 // Az Apple saját árait a src/catalog.js tartalmazza (ritkán változnak), azokat a build.js teszi hozzá.
 // Futtatás: node pipeline/collect_shops.js   (Node 20+, külső csomag nélkül)
 'use strict';
+const { scrub } = require('../src/parse.js');
 const fs = require('fs');
 const path = require('path');
 

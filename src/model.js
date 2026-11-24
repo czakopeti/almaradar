@@ -56,7 +56,7 @@
     const variantKnown = m.variant === ref || ('v_' + m.variant) in c.beta;
     const seen = c.modelIds.includes(p.modelId);
     return {
-      reliable: seen || (variantKnown && (coef.today - m.rel) >= (c.ageMin || 0) - 0.15),
+      reliable: seen || (variantKnown && (coef.today - m.rel) >= (c.ageMin || 0) - 0.15 && (coef.today - m.rel) <= (c.ageMax || 99) + 0.3),
       fair,
       low: fair * Math.exp(-0.674 * c.sigma),
       high: fair * Math.exp(0.674 * c.sigma),
