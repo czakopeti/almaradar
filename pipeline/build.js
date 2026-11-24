@@ -35,8 +35,20 @@ function latestWith(test) {
   for (const d of snapDirs) { const fsIn = fs.readdirSync(path.join(SNAPS, d)).filter(test); if (fsIn.length) return { day: d, files: fsIn.map(f => path.join(SNAPS, d, f)) }; }
   return { day: null, files: [] };
 }
-const haSrc = latestWith(f => /^ha_.*\.txt$/.test(f) || f === 'hardverapro.json');
-const shopSrc = latestWith(f => f === 'shops.json');
+let haSrc = latestWith(f => f === 'hardverapro.json');
+if (!haSrc.day) haSrc = latestWith(f => /^ha_.*\.txt$/.test(f));
+// bolti ajánlatok: boltonként a legfrissebb nap (legfeljebb 7 napos), a gyűjtött és a kézi (shops_manual.json) fájlokból
+const shopRows = {}, shopDay = {};
+for (const d of snapDirs) {
+  if (d < isoDay(-7)) break;
+  for (const f of fs.readdirSync(path.join(SNAPS, d)).filter(f => /^shops.*\.json$/.test(f)).sort()) {
+    const rows = JSON.parse(fs.readFileSync(path.join(SNAPS, d, f), 'utf8'));
+    const byShop = {};
+    for (const r of rows) (byShop[r.shop] = byShop[r.shop] || []).push(r);
+    for (const [sh, rs] of Object.entries(byShop)) if (!shopDay[sh]) { shopDay[sh] = d; shopRows[sh] = rs; }
+  }
+}
+const shopSrc = { day: Object.values(shopDay).sort().pop() || null };
 const raw = [];
 for (const full of haSrc.files) {
   const f = path.basename(full);
@@ -93,7 +105,7 @@ const offerRows = [];
 const APPLE_URL = { iphone: 'https://www.apple.com/hu/shop/buy-iphone', ipad: 'https://www.apple.com/hu/shop/buy-ipad', mac: 'https://www.apple.com/hu/shop/buy-mac', watch: 'https://www.apple.com/hu/shop/buy-watch', airpods: 'https://www.apple.com/hu/airpods/' };
 for (const m of CAT.models) for (const [st, price] of Object.entries(m.apple || {}))
   offerRows.push({ shop: 'Apple', kind: 'new', title: m.name, price, url: APPLE_URL[m.family], modelId: m.id, storage: +st || null, official: true });
-for (const full of shopSrc.files) for (const o of JSON.parse(fs.readFileSync(full, 'utf8'))) {
+for (const o of Object.values(shopRows).flat()) {
   const p = parseListing(o.title, { today: TODAY });
   if (!p.modelId || !CAT.byId[p.modelId] || p.accessory) continue;
   const m = CAT.byId[p.modelId];
@@ -185,7 +197,7 @@ fs.writeFileSync(path.join(OUT, 'listings.json'), '[\n' + compact.map(x => JSON.
 fs.writeFileSync(path.join(OUT, 'offers.json'), '[\n' + offers.map(o => JSON.stringify(o)).join(',\n') + '\n]\n');
 fs.writeFileSync(priceFile, JSON.stringify(priceHist));
 const shopsSeen = [...new Set(offers.map(o => o.shop))];
-fs.writeFileSync(path.join(OUT, 'market.json'), JSON.stringify({ snapshot: SNAP, sources_day: { hardverapro: haSrc.day, shops: shopSrc.day }, coef, models, insights, counts, shops: shopsSeen, nOffers: offers.length, sources: CAT.PRICE_SOURCES }, null, 1));
+fs.writeFileSync(path.join(OUT, 'market.json'), JSON.stringify({ snapshot: SNAP, sources_day: { hardverapro: haSrc.day, shops: shopSrc.day, perShop: shopDay }, coef, models, insights, counts, shops: shopsSeen, nOffers: offers.length, sources: CAT.PRICE_SOURCES }, null, 1));
 // napi idősor modellenként (későbbi ártrend-grafikonokhoz)
 const histFile = path.join(OUT, 'history.json');
 let hist = {}; try { hist = JSON.parse(fs.readFileSync(histFile, 'utf8')); } catch (e) {}

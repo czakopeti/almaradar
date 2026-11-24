@@ -1,0 +1,38 @@
+name: Gyűjtő-teszt
+
+# Kézi hibakeresés: lefuttatja a gyűjtőket, és a letöltött HTML-oldalakat
+# letölthető mellékletként elmenti. Nem módosít semmit a repóban.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  teszt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Hardverapró
+        run: node pipeline/collect.js
+        env:
+          DEBUG_HTML: ${{ runner.temp }}/html
+        continue-on-error: true
+      - name: Boltok
+        run: node pipeline/collect_shops.js
+        env:
+          DEBUG_HTML: ${{ runner.temp }}/html
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: html-mintak
+          path: |
+            ${{ runner.temp }}/html
+            data/snapshots/*/hardverapro.json
+            data/snapshots/*/shops.json
+          retention-days: 3

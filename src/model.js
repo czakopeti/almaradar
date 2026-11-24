@@ -28,7 +28,7 @@
     f.storage = Math.log2(storage / m.base);
     f.dealer = p.dealer ? 1 : 0;
     f.isNew = p.isNew ? 1 : 0;
-    f.battKnown = (p.battery != null && !p.isNew) ? 1 : 0;
+    f.battKnown = (fam === 'iphone' && p.battery != null && !p.isNew) ? 1 : 0;
     f.batt = f.battKnown ? (p.battery - 90) / 10 : 0;
     f.gradeA = p.grade === 'A' ? 1 : 0;
     if (fam === 'ipad') f.cellular = p.cellular ? 1 : 0;

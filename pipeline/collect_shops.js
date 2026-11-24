@@ -16,14 +16,16 @@ const NOT_DEVICE_RE = /\b(tok|case|fólia|folia|üvegfólia|kábel|cable|töltő
 const SHOPS = [
   { shop: 'iStyle', kind: 'new', type: 'shopify', base: 'https://istyle.hu' },
   { shop: 'iBerry', kind: 'refurb', type: 'woocommerce', base: 'https://iberry.hu', search: ['iphone', 'ipad', 'macbook'], warrantyMonths: 24 },
-  { shop: 'Alza', kind: 'new', type: 'generic', urls: [
+  // Az Alza (403) és az eMAG (511) letiltja az automatikus lekérést: ezt tiszteletben tartjuk,
+  // náluk a partnerprogram termékfeedje lesz a megoldás. A MediaMarkt-címeket pontosítani kell.
+  { shop: 'Alza', kind: 'new', type: 'generic', disabled: 'a bolt letiltja (403), partnerfeed kell', urls: [
     'https://www.alza.hu/iphone/18851638.htm', 'https://www.alza.hu/apple-ipad/18851916.htm',
     'https://www.alza.hu/macbook-air/18900519.htm', 'https://www.alza.hu/macbook-pro/18900520.htm'] },
-  { shop: 'iCentre', kind: 'new', type: 'generic', urls: [
+  { shop: 'iCentre', kind: 'new', type: 'woocommerce', base: 'https://icentre.hu', search: ['iphone', 'ipad', 'macbook'], fallback: 'generic', urls: [
     'https://icentre.hu/kategoria/iphone', 'https://icentre.hu/kategoria/ipad', 'https://icentre.hu/kategoria/mac'] },
-  { shop: 'eMAG', kind: 'new', type: 'generic', urls: [
+  { shop: 'eMAG', kind: 'new', type: 'generic', disabled: 'a bolt letiltja (511), partnerfeed kell', urls: [
     'https://www.emag.hu/mobiltelefonok/brand/apple/c', 'https://www.emag.hu/tablet-pc/brand/apple/c', 'https://www.emag.hu/laptopok/brand/apple/c'] },
-  { shop: 'MediaMarkt', kind: 'new', type: 'generic', urls: [
+  { shop: 'MediaMarkt', kind: 'new', type: 'generic', disabled: 'a kategória-címek 404-et adnak, pontosítani kell', urls: [
     'https://www.mediamarkt.hu/hu/brand/apple/iphone', 'https://www.mediamarkt.hu/hu/brand/apple/ipad', 'https://www.mediamarkt.hu/hu/brand/apple/mac'] },
   { shop: 'Rejoy', kind: 'refurb', type: 'generic', warrantyMonths: 24, urls: [
     'https://rejoy.hu/telefon/apple/', 'https://rejoy.hu/telefon/apple/iphone-15/', 'https://rejoy.hu/telefon/apple/iphone-16/', 'https://rejoy.hu/telefon/apple/iphone-17/'] },
@@ -123,11 +125,18 @@ function fromLinks(html, baseUrl) {
   }
   return out;
 }
+const DEBUG = process.env.DEBUG_HTML || null;
+function debugSave(name, body) {
+  if (!DEBUG) return;
+  fs.mkdirSync(DEBUG, { recursive: true });
+  fs.writeFileSync(path.join(DEBUG, name.replace(/[^a-z0-9]+/gi, '_').slice(0, 90) + '.html'), body);
+}
 async function generic(cfg) {
   const out = [];
   for (const u of cfg.urls) {
     try {
       const html = await get(u);
+      debugSave(cfg.shop + '_' + u, html);
       let rows = fromJsonLd(html, u).filter(keep);
       if (rows.length < 3) rows = fromLinks(html, u);
       console.log('   ', rows.length.toString().padStart(3), u);
@@ -145,9 +154,13 @@ if (require.main === module) {
     fs.mkdirSync(dir, { recursive: true });
     const all = [];
     for (const cfg of SHOPS) {
+      if (cfg.disabled) { console.log(cfg.shop.padEnd(11), 'kihagyva:', cfg.disabled); continue; }
       try {
         const fn = { shopify, woocommerce, generic }[cfg.type];
-        const rows = (await fn(cfg)).filter(keep).map(r => Object.assign({ shop: cfg.shop, kind: cfg.kind }, cfg.warrantyMonths ? { warrantyMonths: cfg.warrantyMonths } : {}, r));
+        let got = [];
+        try { got = await fn(cfg); } catch (e) { console.warn('   ', cfg.shop, cfg.type, 'hiba:', e.message); }
+        if (!got.filter(keep).length && cfg.fallback) got = await ({ shopify, woocommerce, generic }[cfg.fallback])(cfg);
+        const rows = got.filter(keep).map(r => Object.assign({ shop: cfg.shop, kind: cfg.kind }, cfg.warrantyMonths ? { warrantyMonths: cfg.warrantyMonths } : {}, r));
         const uniq = [...new Map(rows.map(r => [r.url + '|' + r.title, r])).values()];
         console.log(cfg.shop.padEnd(11), uniq.length, 'ajánlat');
         all.push(...uniq);
