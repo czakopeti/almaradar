@@ -1,0 +1,1267 @@
+<meta charset="utf-8">
+<title>AlmaRadar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Mennyit ér valójában egy használt iPhone, iPad vagy MacBook? Fair ár a mai magyar hirdetések alapján.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: egy oszlopos, eszköz-központú oldal; a nyitó rész maga az ár-ellenőrző,
+   alatta rovatok vékony vonallal elválasztva. Ismétlődő motívum: az ármérő sáv. */
+:root{
+  --bg:#F3F4F7; --surface:#FFFFFF; --sunk:#E9EBF1; --ink:#101521; --muted:#5A6375; --line:#DDE1E8;
+  --accent:#2C38E0; --accent-soft:#E6E8FF; --on-accent:#FFFFFF;
+  --good:#0B8A57; --good-soft:#DDF3E9; --fair:#5E6A82; --fair-soft:#E6E9EF;
+  --pricey:#C9440E; --pricey-soft:#FBE6DC; --sus:#9234AE; --sus-soft:#F3E3F8;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B0E15; --surface:#141924; --sunk:#1B2130; --ink:#E8EBF2; --muted:#98A1B3; --line:#262D3C;
+  --accent:#8B94FF; --accent-soft:#232A55; --on-accent:#0B0E15;
+  --good:#3CC98E; --good-soft:#123426; --fair:#9AA3B6; --fair-soft:#232A37;
+  --pricey:#FF8551; --pricey-soft:#3A2117; --sus:#D98AF0; --sus-soft:#33203B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B0E15; --surface:#141924; --sunk:#1B2130; --ink:#E8EBF2; --muted:#98A1B3; --line:#262D3C;
+  --accent:#8B94FF; --accent-soft:#232A55; --on-accent:#0B0E15;
+  --good:#3CC98E; --good-soft:#123426; --fair:#9AA3B6; --fair-soft:#232A37;
+  --pricey:#FF8551; --pricey-soft:#3A2117; --sus:#D98AF0; --sus-soft:#33203B; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.num{font-variant-numeric:tabular-nums}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;font-stretch:88%}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);max-width:62ch;margin:.5rem 0 0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* felső sáv */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;min-height:58px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand b{font:900 21px/1 var(--display);font-stretch:110%;letter-spacing:-.02em}
+.brand svg{width:26px;height:26px}
+.nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;padding:6px 10px;border-radius:8px}
+.nav a:hover{color:var(--ink);background:var(--sunk)}
+.stamp{font:500 12px/1.2 var(--mono);color:var(--muted);white-space:nowrap}
+@media (max-width:760px){.nav{display:none}.stamp{margin-left:auto}}
+
+section{padding-block:56px;border-top:1px solid var(--line)}
+section.first{border-top:0;padding-block:40px 56px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+
+/* ---------- ár-ellenőrző (nyitó rész) ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:32px;align-items:start}
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(34px,5.2vw,58px);font-weight:900;font-stretch:80%;line-height:.98;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.checker{margin-top:24px;display:grid;gap:12px}
+label.f{display:grid;gap:6px;font-weight:600;font-size:13px}
+label.f span.h{font-weight:400;color:var(--muted)}
+textarea,input,select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
+textarea{min-height:84px;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.row2{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.btn{font:600 14px/1 var(--body);border:0;border-radius:10px;padding:12px 16px;background:var(--accent);color:var(--on-accent);cursor:pointer}
+.btn.ghost{background:var(--sunk);color:var(--ink)}
+.samples{display:flex;gap:6px;flex-wrap:wrap}
+.samples button{font:500 12px/1 var(--body);border:1px solid var(--line);background:transparent;color:var(--muted);padding:7px 9px;border-radius:999px;cursor:pointer}
+.samples button:hover{color:var(--ink);border-color:var(--muted)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.result{padding:22px;display:grid;gap:18px}
+.result .verdict{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;font:700 12px/1 var(--body);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good)} .pill.fair{background:var(--fair-soft);color:var(--fair)}
+.pill.pricey{background:var(--pricey-soft);color:var(--pricey)} .pill.suspicious{background:var(--sus-soft);color:var(--sus)}
+.pill.defect{background:var(--sunk);color:var(--muted)}
+.big{font:900 clamp(34px,4.6vw,48px)/1 var(--display);font-stretch:85%;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 12px/1 var(--mono);background:var(--sunk);color:var(--ink);padding:6px 8px;border-radius:6px}
+.chip.miss{color:var(--muted);text-decoration:line-through}
+
+/* ármérő sáv – az oldal visszatérő motívuma */
+.gauge{position:relative;height:58px;margin-top:4px}
+.gauge .bar{position:absolute;left:0;right:0;top:18px;height:12px;border-radius:6px;display:flex;overflow:hidden}
+.gauge .bar i{display:block;height:100%}
+.gauge .bar .z1{background:var(--sus-soft);flex:0 0 20%}
+.gauge .bar .z2{background:var(--good-soft);flex:0 0 26.67%}
+.gauge .bar .z3{background:var(--fair-soft);flex:0 0 26.67%}
+.gauge .bar .z4{background:var(--pricey-soft);flex:1}
+.gauge .tick{position:absolute;top:12px;width:2px;height:24px;background:var(--ink);opacity:.35}
+.gauge .needle{position:absolute;top:6px;width:4px;height:36px;margin-left:-2px;border-radius:2px;background:var(--ink);transition:left .35s ease}
+.gauge .needle::after{content:attr(data-l);position:absolute;top:-2px;left:8px;font:700 12px/1 var(--mono);white-space:nowrap;color:var(--ink)}
+.gauge .lab{position:absolute;top:40px;font:500 11px/1.2 var(--mono);color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kv div{background:var(--sunk);border-radius:10px;padding:10px 12px}
+.kv b{display:block;font:800 18px/1.2 var(--display);font-stretch:90%}
+.kv span{font-size:12px;color:var(--muted)}
+@media (max-width:480px){.kv{grid-template-columns:1fr 1fr}}
+.comps{display:grid;gap:6px}
+.comp{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;font-size:13px;padding:8px 10px;border-radius:8px;background:var(--sunk);text-decoration:none;color:var(--ink)}
+.comp span.t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.comp b{font-variant-numeric:tabular-nums}
+.note{font-size:13px;color:var(--muted)}
+.warnbox{border-left:3px solid var(--sus);padding:8px 12px;background:var(--sus-soft);border-radius:0 8px 8px 0;font-size:13px}
+
+/* ---------- mit kapok X forintért ---------- */
+.budget{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px}
+@media (max-width:820px){.budget{grid-template-columns:1fr}}
+.budget-ctl{display:grid;gap:16px;align-content:start}
+.money{font:900 44px/1 var(--display);font-stretch:85%}
+input[type=range]{padding:0;border:0;background:transparent;accent-color:var(--accent)}
+.seg{display:inline-flex;background:var(--sunk);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:var(--muted);font:600 13px/1 var(--body);padding:9px 12px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.opt{padding:16px;display:grid;gap:8px;align-content:start}
+.opt .k{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.opt h3{font-size:19px;font-weight:800;font-stretch:90%}
+.opt .p{font:800 22px/1 var(--display);font-stretch:90%}
+.tag{font:600 11px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:5px 7px;border-radius:5px;background:var(--accent-soft);color:var(--accent)}
+.tag.used{background:var(--sunk);color:var(--muted)}
+.tag.ref{background:var(--good-soft);color:var(--good)}
+.support{font-size:12px;color:var(--muted)}
+.support b{color:var(--ink)}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+
+/* ---------- legjobb vételek ---------- */
+.table{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.r,th.r{text-align:right}
+td .tt{display:block;max-width:46ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td .ms{font-size:12px;color:var(--muted)}
+tr:hover td{background:var(--sunk)}
+.dev{font:700 13px/1 var(--mono)}
+.dev.neg{color:var(--good)} .dev.pos{color:var(--pricey)}
+
+/* ---------- mi mozgatja az árat ---------- */
+.drivers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.drivers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.drv{padding:16px;display:grid;gap:6px}
+.drv b{font:900 30px/1 var(--display);font-stretch:85%}
+.drv b.neg{color:var(--pricey)} .drv b.pos{color:var(--good)}
+.drv span{font-size:13px;color:var(--muted)}
+.chart{margin-top:20px;padding:18px}
+.chart svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+
+/* ---------- új vagy használt ---------- */
+.nvu{display:grid;gap:12px}
+.nvu-row{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:16px;padding:16px;align-items:center}
+@media (max-width:640px){.nvu-row{grid-template-columns:1fr}}
+.nvu-row h3{font-size:18px;font-weight:800;font-stretch:90%}
+.bars{display:grid;gap:6px}
+.bl{display:grid;grid-template-columns:150px minmax(0,1fr) 96px;gap:10px;align-items:center;font-size:13px}
+@media (max-width:480px){.bl{grid-template-columns:96px minmax(0,1fr) 84px}}
+.bl .track{height:14px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.bl .fill{height:100%;border-radius:4px;background:var(--accent)}
+.bl .fill.shop{background:var(--fair)} .bl .fill.used{background:var(--good)} .bl .fill.dealer{background:var(--good);opacity:.55}
+.bl b{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---------- modellek ---------- */
+.models{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:24px}
+@media (max-width:860px){.models{grid-template-columns:1fr}}
+.mlist{display:grid;gap:4px;max-height:640px;overflow:auto;padding-right:4px;align-content:start}
+@media (max-width:860px){.mlist{max-height:260px}}
+.mlist button{display:flex;justify-content:space-between;gap:8px;align-items:center;border:0;background:transparent;color:var(--ink);font:500 14px/1.2 var(--body);text-align:left;padding:9px 10px;border-radius:8px;cursor:pointer}
+.mlist button:hover{background:var(--sunk)}
+.mlist button[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.mlist .cnt{font:500 11px/1 var(--mono);color:var(--muted)}
+.mlist .fam{font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px}
+.mdetail{padding:22px;display:grid;gap:18px;min-width:0}
+.mdetail>*,.sout>*,.result>*{min-width:0}
+.mdetail .hd{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:start}
+.mdetail h3{font-size:30px;font-weight:900;font-stretch:85%}
+.stor{display:flex;gap:8px;flex-wrap:wrap}
+.stor div{background:var(--sunk);border-radius:10px;padding:10px 14px}
+.stor b{display:block;font:800 18px/1.2 var(--display);font-stretch:90%}
+.stor span{font:500 12px/1 var(--mono);color:var(--muted)}
+
+/* ---------- riasztás ---------- */
+.alert-grid{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:24px}
+@media (max-width:820px){.alert-grid{grid-template-columns:1fr}}
+.aform{padding:20px;display:grid;gap:12px;align-content:start}
+.alist{display:grid;gap:10px;align-content:start}
+.al{padding:14px 16px;display:grid;gap:8px}
+.al .hd{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.al button{border:0;background:transparent;color:var(--muted);cursor:pointer;font:500 12px/1 var(--body)}
+
+/* ---------- eladnád ---------- */
+.sell{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px}
+@media (max-width:860px){.sell{grid-template-columns:1fr}}
+.sform{padding:20px;display:grid;gap:12px;align-content:start}
+.sform .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sout{display:grid;gap:14px;align-content:start;min-width:0}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.tiers{grid-template-columns:1fr}}
+.tier{padding:16px;display:grid;gap:4px}
+.tier.mid{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.tier b{font:900 26px/1.1 var(--display);font-stretch:85%}
+.tier span{font-size:13px;color:var(--muted)}
+.proj{padding:16px}
+.proj svg{display:block;width:100%;height:auto}
+.adtext{padding:16px;display:grid;gap:10px}
+.adtext pre{margin:0;white-space:pre-wrap;font:14px/1.5 var(--body);background:var(--sunk);padding:12px;border-radius:10px;user-select:all}
+.copy{justify-self:start}
+/* ellenőrzőlista */
+.check{display:grid;gap:8px}
+.check li{list-style:none;display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;font-size:13px}
+.check ul{margin:0;padding:0;display:grid;gap:6px}
+.check li::before{content:"";width:14px;height:14px;margin-top:3px;border:2px solid var(--muted);border-radius:4px}
+.check li.ask::before{border-color:var(--pricey)}
+details.qa summary{cursor:pointer;font-weight:600;font-size:14px}
+/* árkalauz */
+.guide{overflow-x:auto}
+.guide table td,.guide table th{white-space:nowrap}
+.guide td.hl{font-weight:700}
+.trend svg{display:block;width:100%;height:auto}
+
+/* ---------- módszer ---------- */
+.method{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.method h3{font-size:18px;font-weight:800;margin-bottom:6px;font-stretch:95%}
+.method p{margin:0 0 10px;color:var(--muted);max-width:62ch}
+footer{padding-block:28px 48px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.loading{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#ellenorzo" aria-label="AlmaRadar kezdőlap">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2" opacity=".25"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><path d="M16 16 L28 9" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="var(--accent)"/></svg>
+      <b>AlmaRadar</b>
+    </a>
+    <nav class="nav" aria-label="Rovatok">
+      <a href="#ellenorzo">Ár-ellenőrző</a><a href="#elado">Eladnád?</a><a href="#keret">Mit kapok?</a><a href="#vetelek">Mai vételek</a><a href="#piac">Piac</a><a href="#modellek">Modellek</a><a href="#modszer">Módszer</a>
+    </nav>
+    <span class="stamp" id="stamp">adatok betöltése…</span>
+  </div>
+</header>
+
+<main>
+  <!-- 1. ÁR-ELLENŐRZŐ -->
+  <section class="first" id="ellenorzo">
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow">Apple-árfigyelő · új, felújított, használt</div>
+        <h1 style="margin-top:14px">Mennyit ér <em>valójában</em> az a használt iPhone?</h1>
+        <p class="lede">Másold be egy hirdetés címét és árát a Hardverapróról, a Jófogásról vagy a Facebookról. Megmondjuk, korrekt-e, a <span id="nlist" class="num">mai</span> magyar hirdetés alapján, amit ma átnéztünk.</p>
+        <form class="checker" id="checker" autocomplete="off">
+          <label class="f" for="q">Hirdetés címe vagy szövege <span class="h">modell, tárhely, akku, állapot, garancia</span>
+            <textarea id="q" spellcheck="false"></textarea>
+          </label>
+          <div class="row2">
+            <label class="f" for="qp">Kért ár (Ft)
+              <input id="qp" inputmode="numeric" placeholder="pl. 185 000">
+            </label>
+            <button class="btn" type="submit">Ellenőrzés</button>
+          </div>
+          <div class="samples" id="samples" aria-label="Példák"></div>
+        </form>
+      </div>
+      <div class="card result" id="result" aria-live="polite"><p class="loading">Az ármodell betöltése…</p></div>
+    </div>
+  </section>
+
+  <!-- 1b. ELADNÁD -->
+  <section id="elado">
+    <div class="wrap">
+      <div class="sec-head"><div><div class="eyebrow">Eladói oldal</div><h2>Mennyit kapok a gépemért?</h2>
+        <p class="lede">Add meg, mid van. Megmondjuk, mennyiért kel el gyorsan, mennyi a korrekt ár, és mennyit kérhetsz, ha ráérsz. Azt is látod, mennyit ér fél vagy egy év múlva, és kapsz egy kész hirdetésszöveget.</p></div></div>
+      <div class="sell">
+        <form class="card sform" id="sform" autocomplete="off">
+          <label class="f" for="sm">Modell<select id="sm"></select></label>
+          <div class="two">
+            <label class="f" for="ss">Tárhely<select id="ss"></select></label>
+            <label class="f" for="sb">Akku (%)<input id="sb" inputmode="numeric" value="88"></label>
+          </div>
+          <label class="f" for="sg">Állapot<select id="sg">
+            <option value="A">Újszerű, karcmentes</option><option value="B" selected>Szép, apró használati nyomok</option>
+            <option value="C">Kopott, karcos</option><option value="D">Hibás (kijelző, Face ID, akku)</option></select></label>
+          <div class="two">
+            <label class="f" for="sbox">Doboz, számla<select id="sbox"><option value="1">megvan</option><option value="0">nincs</option></select></label>
+            <label class="f" for="scol">Szín (a hirdetéshez)<input id="scol" value="fekete"></label>
+          </div>
+        </form>
+        <div class="sout" id="sout"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. MIT KAPOK -->
+  <section id="keret">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">Keretből visszafelé</div><h2>Mit kapok ennyi pénzért?</h2>
+          <p class="lede">Állítsd be, mennyit szánsz rá. Megmutatjuk a legújabb gépeket, amik ma beleférnek, újonnan, kereskedői garanciával vagy magánszemélytől, és meddig kapnak még frissítést.</p></div>
+      </div>
+      <div class="budget">
+        <div class="budget-ctl">
+          <div><div class="sub">Keret</div><div class="money num" id="bval">150 000 Ft</div></div>
+          <input type="range" id="brange" min="30000" max="700000" step="5000" value="150000" aria-label="Keret forintban">
+          <div class="seg" role="group" aria-label="Termékcsalád" id="bfam">
+            <button type="button" data-f="iphone" aria-pressed="true">iPhone</button>
+            <button type="button" data-f="ipad" aria-pressed="false">iPad</button>
+            <button type="button" data-f="mac" aria-pressed="false">Mac</button>
+          </div>
+          <p class="note">A használt ár egy magánszemélytől vett, szép állapotú, 90%-os akkus, alap tárhelyes gép becsült ára. A frissítési év becslés: az Apple a gyakorlatban kb. 7 évig frissíti az iPhone-okat és iPadeket.</p>
+        </div>
+        <div class="opts" id="opts"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. MAI VÉTELEK -->
+  <section id="vetelek">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">Hirdetések a fair ár alatt</div><h2>A mai legjobb vételek</h2>
+          <p class="lede">Hirdetések, amik legalább 10%-kal a hasonló gépek fair ára alatt vannak, de nem gyanúsan olcsók. A 30%-nál nagyobb kedvezményt külön jelöljük. Ott nézd meg alaposan, mi a gond.</p></div>
+        <div class="seg" role="group" aria-label="Szűrés" id="dfam">
+          <button type="button" data-f="all" aria-pressed="true">Mind</button>
+          <button type="button" data-f="iphone" aria-pressed="false">iPhone</button>
+          <button type="button" data-f="ipad" aria-pressed="false">iPad</button>
+          <button type="button" data-f="mac" aria-pressed="false">Mac</button>
+        </div>
+      </div>
+      <div class="card table"><table>
+        <thead><tr><th>Hirdetés</th><th class="r">Ár</th><th class="r">Fair ár</th><th class="r">Eltérés</th><th></th></tr></thead>
+        <tbody id="deals"><tr><td colspan="5" class="loading">Betöltés…</td></tr></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- 4. PIAC -->
+  <section id="piac">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">Mit fizetnek ma az emberek</div><h2>Mi mozgatja egy használt iPhone árát?</h2>
+          <p class="lede">A <span id="nfit" class="num">…</span> mai iPhone-hirdetésre illesztett modell szerint, ha minden mást azonosnak veszünk:</p></div>
+      </div>
+      <div class="drivers" id="drivers"></div>
+      <div class="card chart">
+        <div class="eyebrow">Értékvesztés-térkép · iPhone, fair ár magánszemélytől, alap tárhely</div>
+        <div id="dchart" style="margin-top:10px"></div>
+        <div class="legend"><span><i style="background:var(--fair)"></i>alap, mini, Plus, e</span><span><i style="background:var(--accent)"></i>Pro</span><span><i style="background:var(--good)"></i>Pro Max</span><span><i style="background:var(--pricey)"></i>Air</span></div>
+      </div>
+      <div style="margin-top:40px">
+        <div class="eyebrow">Ugyanaz a gép, három úton</div>
+        <h2 style="margin-top:8px">Új vagy használt?</h2>
+        <p class="lede" style="margin-bottom:18px">Azoknál a gépeknél, amelyek ma is kaphatók újonnan, egymás mellett az Apple saját ára, a legjobb ismert bolti ár és a mai használt piac.</p>
+        <div class="nvu" id="nvu"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. MODELLEK -->
+  <section id="modellek">
+    <div class="wrap">
+      <div class="sec-head"><div><div class="eyebrow">Modellenként</div><h2>Minden modell egy helyen</h2></div></div>
+      <div class="models">
+        <div class="card" style="padding:8px"><div class="mlist" id="mlist"></div></div>
+        <div class="card mdetail" id="mdetail"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. RIASZTÁS -->
+  <section id="riasztas">
+    <div class="wrap">
+      <div class="sec-head"><div><div class="eyebrow">Ne neked kelljen figyelni</div><h2>Szólj, ha jön egy jó vétel</h2>
+        <p class="lede">Add meg, mit keresel, és megmutatjuk, mi felel meg neki a mai hirdetések közül. A beállítás ebben a böngészőben marad meg. Az e-mailes napi értesítést az éles verzió küldi majd.</p></div></div>
+      <div class="alert-grid">
+        <form class="card aform" id="aform">
+          <label class="f" for="am">Modell<select id="am"></select></label>
+          <label class="f" for="amax">Legfeljebb (Ft)<input id="amax" inputmode="numeric" value="150 000"></label>
+          <label class="f" for="abat">Akku legalább<select id="abat"><option value="0">mindegy</option><option value="85">85%</option><option value="90" selected>90%</option><option value="95">95%</option></select></label>
+          <button class="btn" type="submit">Figyelés hozzáadása</button>
+        </form>
+        <div class="alist" id="alist"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. MÓDSZER -->
+  <section id="modszer">
+    <div class="wrap">
+      <div class="sec-head"><div><div class="eyebrow">Hogyan számolunk</div><h2>Módszer és források</h2></div></div>
+      <div class="method">
+        <div><h3>Honnan jönnek az árak?</h3>
+          <p>A használt árak a Hardverapró iPhone-, iPad- és MacBook-rovatának nyilvános hirdetéseiből jönnek: cím, ár, dátum és link. Eladói nevet, telefonszámot és fotót nem tárolunk, minden sor az eredeti hirdetésre mutat vissza.</p>
+          <p>Az új árak az Apple magyar oldaláról és a nagy boltokból (Alza, iStyle) származnak. A pillanatkép dátuma a fejlécben látszik.</p></div>
+        <div><h3>Hogyan lesz ebből fair ár?</h3>
+          <p>Egy szövegértelmező minden címből kiszedi a modellt, a tárhelyet, az akkut, az állapotot, a garanciát és azt, hogy kereskedő vagy magánszemély hirdet. Erre családonként (iPhone, iPad, Mac) egy logaritmikus regressziót illesztünk. A kiugró árakat kétszer kiszűrjük, a kevés hirdetésű modelleket a közös értékvesztési görbe felé húzzuk.</p>
+          <p>A „fair ár” az, amennyit egy ugyanilyen gép a mai piacon átlagosan kér. A sáv a hirdetések felének szokásos ársávja.</p></div>
+        <div><h3>Mire figyelj?</h3>
+          <p>A 30%-nál nagyobb kedvezmény ritkán ajándék. Gyakori ok a hálózatfüggés, a cserélt kijelző, az iCloud-zár vagy egy átverés. Személyes átvételnél nézd meg az akku állapotát, a Face ID-t, és azt, hogy a gép ki van-e léptetve az iCloudból.</p>
+          <p>Az AlmaRadar független oldal, nem kapcsolódik az Apple Inc.-hez.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap" id="foot">AlmaRadar prototípus.</div></footer>
+
+<script>/* AlmaRadar – termékkatalógus.
+ * Egy helyen van minden, amit a gépekről tudunk: megjelenés, alap tárhely,
+ * hivatalos Apple HU ár és a legjobb ismert bolti új ár.
+ * Az árak forrása és dátuma a PRICE_SOURCES listában.
+ * A böngésző (window.ALMA_CATALOG) és a Node-os gyűjtő (require) is ezt használja. */
+(function (root) {
+  'use strict';
+
+  // rel = megjelenés (év + tört év), approx = a dátum becsült
+  const M = (id, family, name, rel, opts = {}) => Object.assign({ id, family, name, rel }, opts);
+
+  const models = [
+    // ---------- iPhone ----------
+    M('iphone-12', 'iphone', 'iPhone 12', 2020.8, { variant: 'base', base: 64 }),
+    M('iphone-12-mini', 'iphone', 'iPhone 12 mini', 2020.85, { variant: 'mini', base: 64 }),
+    M('iphone-12-pro', 'iphone', 'iPhone 12 Pro', 2020.8, { variant: 'pro', base: 128 }),
+    M('iphone-12-pro-max', 'iphone', 'iPhone 12 Pro Max', 2020.85, { variant: 'promax', base: 128 }),
+    M('iphone-13', 'iphone', 'iPhone 13', 2021.7, { variant: 'base', base: 128 }),
+    M('iphone-13-mini', 'iphone', 'iPhone 13 mini', 2021.7, { variant: 'mini', base: 128 }),
+    M('iphone-13-pro', 'iphone', 'iPhone 13 Pro', 2021.7, { variant: 'pro', base: 128 }),
+    M('iphone-13-pro-max', 'iphone', 'iPhone 13 Pro Max', 2021.7, { variant: 'promax', base: 128 }),
+    M('iphone-14', 'iphone', 'iPhone 14', 2022.7, { variant: 'base', base: 128 }),
+    M('iphone-14-plus', 'iphone', 'iPhone 14 Plus', 2022.8, { variant: 'plus', base: 128 }),
+    M('iphone-14-pro', 'iphone', 'iPhone 14 Pro', 2022.7, { variant: 'pro', base: 128 }),
+    M('iphone-14-pro-max', 'iphone', 'iPhone 14 Pro Max', 2022.7, { variant: 'promax', base: 128 }),
+    M('iphone-15', 'iphone', 'iPhone 15', 2023.7, { variant: 'base', base: 128 }),
+    M('iphone-15-plus', 'iphone', 'iPhone 15 Plus', 2023.7, { variant: 'plus', base: 128 }),
+    M('iphone-15-pro', 'iphone', 'iPhone 15 Pro', 2023.7, { variant: 'pro', base: 128 }),
+    M('iphone-15-pro-max', 'iphone', 'iPhone 15 Pro Max', 2023.7, { variant: 'promax', base: 256 }),
+    M('iphone-16', 'iphone', 'iPhone 16', 2024.7, { variant: 'base', base: 128, sold: true }),
+    M('iphone-16-plus', 'iphone', 'iPhone 16 Plus', 2024.7, { variant: 'plus', base: 128 }),
+    M('iphone-16-pro', 'iphone', 'iPhone 16 Pro', 2024.7, { variant: 'pro', base: 128 }),
+    M('iphone-16-pro-max', 'iphone', 'iPhone 16 Pro Max', 2024.7, { variant: 'promax', base: 256 }),
+    M('iphone-16e', 'iphone', 'iPhone 16e', 2025.15, { variant: 'e', base: 128 }),
+    M('iphone-17', 'iphone', 'iPhone 17', 2025.7, { variant: 'base', base: 256, sold: true,
+      apple: { 256: 419990, 512: 519990 } }),
+    M('iphone-17-pro', 'iphone', 'iPhone 17 Pro', 2025.7, { variant: 'pro', base: 256 }),
+    M('iphone-17-pro-max', 'iphone', 'iPhone 17 Pro Max', 2025.7, { variant: 'promax', base: 256 }),
+    M('iphone-air', 'iphone', 'iPhone Air', 2025.7, { variant: 'air', base: 256, sold: true,
+      apple: { 256: 499990, 512: 599990, 1024: 799990 } }),
+    M('iphone-17e', 'iphone', 'iPhone 17e', 2026.2, { variant: 'e', base: 256, sold: true, approx: true,
+      apple: { 256: 319990, 512: 419990 } }),
+    M('iphone-18-pro', 'iphone', 'iPhone 18 Pro', 2026.7, { variant: 'pro', base: 256, sold: true,
+      apple: { 256: 549990, 512: 649990, 1024: 849990, 2048: 1149990 } }),
+    M('iphone-18-pro-max', 'iphone', 'iPhone 18 Pro Max', 2026.7, { variant: 'promax', base: 256, sold: true,
+      apple: { 256: 599990, 512: 699990, 1024: 899990, 2048: 1199990 } }),
+    M('iphone-duo', 'iphone', 'iPhone Duo', 2026.8, { variant: 'duo', base: 256, sold: true,
+      apple: { 256: 899990 } }),
+
+    // ---------- iPad ----------
+    M('ipad-6', 'ipad', 'iPad (6. gen)', 2018.2, { variant: 'base', base: 32 }),
+    M('ipad-7', 'ipad', 'iPad (7. gen)', 2019.7, { variant: 'base', base: 32 }),
+    M('ipad-8', 'ipad', 'iPad (8. gen)', 2020.7, { variant: 'base', base: 32 }),
+    M('ipad-9', 'ipad', 'iPad (9. gen)', 2021.7, { variant: 'base', base: 64 }),
+    M('ipad-10', 'ipad', 'iPad (10. gen)', 2022.8, { variant: 'base', base: 64 }),
+    M('ipad-a16', 'ipad', 'iPad (A16, 11. gen)', 2025.2, { variant: 'base', base: 128, sold: true,
+      apple: { 128: 209990, 256: 259990, 512: 359990 }, shop: { 128: [154990, 'Alza'], 256: [199990, 'Alza'] } }),
+    M('ipad-air-m1', 'ipad', 'iPad Air 5 (M1)', 2022.2, { variant: 'air', base: 64 }),
+    M('ipad-air-m2', 'ipad', 'iPad Air (M2)', 2024.4, { variant: 'air', base: 128 }),
+    M('ipad-air-m3', 'ipad', 'iPad Air (M3)', 2025.2, { variant: 'air', base: 128,
+      shop: { 128: [259990, 'Alza'] } }),
+    M('ipad-air-m4', 'ipad', 'iPad Air (M4)', 2026.2, { variant: 'air', base: 128, sold: true,
+      apple: { 128: 349990 }, shop: { 128: [279990, 'Alza'] } }),
+    M('ipad-mini-a17', 'ipad', 'iPad mini (A17 Pro)', 2024.8, { variant: 'mini', base: 128,
+      shop: { 128: [213490, 'Alza'] } }),
+    M('ipad-mini-oled', 'ipad', 'iPad mini (OLED, 2026)', 2026.8, { variant: 'mini', base: 128, sold: true, approx: true,
+      apple: { 128: 329990 } }),
+    M('ipad-pro-m4', 'ipad', 'iPad Pro (M4)', 2024.4, { variant: 'pro', base: 256 }),
+    M('ipad-pro-m5', 'ipad', 'iPad Pro (M5)', 2025.8, { variant: 'pro', base: 256, sold: true, approx: true,
+      apple: { 256: 549990 } }),
+
+    // ---------- Mac ----------
+    M('mba-m1', 'mac', 'MacBook Air M1', 2020.9, { variant: 'air', size: 13, ram: 8, base: 256 }),
+    M('mba-m2', 'mac', 'MacBook Air M2', 2022.6, { variant: 'air', size: 13, ram: 8, base: 256 }),
+    M('mba-m3', 'mac', 'MacBook Air M3', 2024.2, { variant: 'air', size: 13, ram: 8, base: 256 }),
+    M('mba-m4', 'mac', 'MacBook Air M4', 2025.2, { variant: 'air', size: 13, ram: 16, base: 256 }),
+    M('mba-m5', 'mac', 'MacBook Air M5', 2026.2, { variant: 'air', size: 13, ram: 16, base: 512, sold: true, approx: true,
+      apple: { 512: 499990 }, shop: { 512: [465900, 'Alza'] }, note: '13" 16 GB / 512 GB; a 15" 599 990 Ft (Alza: 541 900 Ft)' }),
+    M('macbook-neo', 'mac', 'MacBook Neo (A18 Pro)', 2026.2, { variant: 'neo', size: 13, ram: 8, base: 256, sold: true, approx: true,
+      shop: { 256: [289990, 'iStyle'] }, listPrice: 319990 }),
+    M('mbp-m1', 'mac', 'MacBook Pro M1 / M1 Pro / M1 Max', 2021.8, { variant: 'pro', size: 14, ram: 16, base: 512 }),
+    M('mbp-m2', 'mac', 'MacBook Pro M2 / M2 Pro / M2 Max', 2023.1, { variant: 'pro', size: 14, ram: 16, base: 512 }),
+    M('mbp-m3', 'mac', 'MacBook Pro M3 / M3 Pro / M3 Max', 2023.85, { variant: 'pro', size: 14, ram: 8, base: 512 }),
+    M('mbp-m4', 'mac', 'MacBook Pro M4 / M4 Pro / M4 Max', 2024.85, { variant: 'pro', size: 14, ram: 16, base: 512 }),
+    M('mbp-m5', 'mac', 'MacBook Pro M5 / M5 Pro / M5 Max', 2025.8, { variant: 'pro', size: 14, ram: 16, base: 512, sold: true, approx: true }),
+    M('mac-intel', 'mac', 'Intel MacBook (2017–2020)', 2018.5, { variant: 'intel', size: 13, ram: 8, base: 256, eol: true }),
+
+    // ---------- Watch / AirPods (egyelőre csak új ár) ----------
+    M('watch-s12', 'watch', 'Apple Watch Series 12', 2026.7, { sold: true, apple: { 0: 169990 } }),
+    M('watch-ultra-4', 'watch', 'Apple Watch Ultra 4', 2026.7, { sold: true, apple: { 0: 349990 } }),
+    M('watch-se-3', 'watch', 'Apple Watch SE 3', 2025.7, { sold: true, apple: { 0: 99990 } }),
+    M('airpods-5', 'airpods', 'AirPods 5', 2026.7, { sold: true, apple: { 0: 57990 }, note: 'vezeték nélküli tokkal 64 990 Ft' }),
+    M('airpods-pro-3', 'airpods', 'AirPods Pro 3', 2025.7, { sold: true, apple: { 0: 99990 } }),
+    M('airpods-max-2', 'airpods', 'AirPods Max 2', 2026.7, { sold: true, approx: true, apple: { 0: 229990 } }),
+  ];
+
+  // Becsült szoftvertámogatás: az Apple az iPhone-okat és iPadeket a gyakorlatban
+  // nagyjából 7 évig frissíti; a macOS 26 az utolsó rendszer Intel Macekre.
+  const SUPPORT_YEARS = { iphone: 7, ipad: 7, mac: 8, watch: 6, airpods: 6 };
+  function supportUntil(m) {
+    if (m.eol) return 2026;
+    return Math.floor(m.rel + (SUPPORT_YEARS[m.family] || 6));
+  }
+
+  const PRICE_SOURCES = [
+    { name: 'Apple Magyarország (apple.com/hu)', date: '2026-11-24' },
+    { name: 'Alza.hu', date: '2026-11-24' },
+    { name: 'iStyle.hu', date: '2026-11-24' },
+  ];
+
+  const FAMILIES = {
+    iphone: 'iPhone', ipad: 'iPad', mac: 'Mac', watch: 'Apple Watch', airpods: 'AirPods',
+  };
+
+  const byId = Object.fromEntries(models.map(m => [m.id, m]));
+  const api = { models, byId, supportUntil, PRICE_SOURCES, FAMILIES };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.ALMA_CATALOG = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* AlmaRadar – hirdetéscím-értelmező.
+ * Egy szabad szöveges hirdetéscímből (Hardverapró, Jófogás, Facebook…)
+ * kiszedi a modellt, tárhelyet, akkut, állapotot, garanciát és az eladó típusát.
+ * Ugyanez a fájl fut a napi gyűjtőben (Node) és az oldal ár-ellenőrzőjében (böngésző). */
+(function (root) {
+  'use strict';
+
+  function norm(s) {
+    return (' ' + String(s || '') + ' ')
+      .toLowerCase()
+      .replace(/[“”″]/g, '"')
+      .replace(/(\d)(?=[a-z])/g, '$1 ')          // 15pro -> 15 pro, 256gb marad (lent kezeljük)
+      .replace(/([a-z])(?=\d)/g, '$1 ')          // iphone15 -> iphone 15
+      .replace(/\bpro\s*max\b/g, 'pro max')
+      .replace(/\bpromax\b/g, 'pro max')
+      .replace(/\bpus\b/g, 'plus')
+      .replace(/\s+/g, ' ');
+  }
+
+  // ---- tárhely / memória ----
+  function sizes(t) {
+    // "256 gb", "1 tb", "1tb", "8/256", "16 gb/512 gb"
+    const out = [];
+    const re = /(\d{1,4})\s*(tb|gb|g|gn)\b/g;
+    let m;
+    while ((m = re.exec(t))) {
+      let v = +m[1];
+      if (m[2] === 'tb') v *= 1024;
+      out.push({ v, i: m.index, ram: /^\s*(ram|memória|memoria|ram\b)/.test(t.slice(re.lastIndex, re.lastIndex + 9)) });
+    }
+    const slash = /\b(\d{1,3})\s*(?:gb)?\s*\/\s*(\d{2,4}|1|2)\s*(tb|gb)?\b/g;
+    while ((m = slash.exec(t))) {
+      const a = +m[1]; let b = +m[2];
+      if (m[3] === 'tb' || b <= 4) b *= 1024;
+      if ([8, 16, 18, 24, 32, 36, 48, 64, 96, 128].includes(a) && b >= 128) {
+        out.push({ v: a, i: m.index, ram: true }, { v: b, i: m.index + 1, ram: false });
+      }
+    }
+    return out;
+  }
+  const STORAGES = [16, 32, 64, 128, 256, 512, 1024, 2048];
+  function pickStorage(t) {
+    const s = sizes(t).filter(x => !x.ram && STORAGES.includes(x.v));
+    if (!s.length) return null;
+    return s[0].v;
+  }
+  function pickMacMem(t) {
+    const s = sizes(t);
+    const ramCand = s.filter(x => x.ram || [8, 16, 18, 24, 32, 36, 48, 64, 96].includes(x.v));
+    const ssdCand = s.filter(x => !x.ram && x.v >= 256);
+    const ssd = ssdCand.length ? Math.max(...ssdCand.map(x => x.v)) : null;
+    let ram = null;
+    const explicit = s.find(x => x.ram);
+    if (explicit) ram = explicit.v;
+    else {
+      const r = ramCand.filter(x => x.v !== ssd && x.v < 256);
+      if (r.length) ram = r[0].v;
+    }
+    return { ram, ssd };
+  }
+
+  // ---- akku ----
+  function battery(t) {
+    if (/(^|[^a-záéíóöőúüű])(új|uj)\s*(gyári\s*|eredeti\s*|apple\s*|100\s*%?(-os)?\s*)?(akku|akksi|aksi|aku|akkumulátor)/.test(t) ||
+        /(akku|akksi|aksi)\s*csere/.test(t)) return { pct: 100, fresh: true };
+    const m = t.match(/(\d{2,3})\s*%/);
+    if (m) {
+      const v = +m[1];
+      if (v >= 60 && v <= 100) return { pct: v, fresh: false };
+    }
+    const m2 = t.match(/(akku|akksi|aksi|akkumulátor)[^0-9]{0,6}(\d{2,3})\b/);
+    if (m2 && +m2[2] >= 60 && +m2[2] <= 100) return { pct: +m2[2], fresh: false };
+    return { pct: null, fresh: false };
+  }
+
+  // ---- garancia (hónap) ----
+  function warranty(t, today) {
+    let m = t.match(/(20[2-3]\d)\s*[.\-\/]\s*(\d{1,2})(?:\s*[.\-\/]\s*(\d{1,2}))?/) || t.match(/(20[2-3]\d)\s*()()(-?ig|hó)/);
+    if (m && /gar|apple|jótáll|jotall|applecare/.test(t)) {
+      const y = +m[1], mo = m[2] ? +m[2] : 6;
+      const months = Math.round((y + (mo - 1) / 12 - today) * 12);
+      if (months > 0 && months < 60) return months;
+    }
+    m = t.match(/(\d{1,2})\s*(hó|hónap|honap|hónapos)\s*(apple\s*)?(garancia|garanciával|gar|gari|jótáll)/);
+    if (m) return +m[1];
+    m = t.match(/(\d)\s*(év|éves|ev)\s*(apple\s*|nemzetközi\s*|hivatalos\s*)?(garancia|garanciával|garanciás|gari|jótáll)/);
+    if (m) return +m[1] * 12;
+    if (/garancia|garanciával|garanciás|garanciális|gari\b|jótállás/.test(t)) return 6;
+    return null;
+  }
+
+  function isNewItem(t) {
+    if (/bontatlan|aktiválatlan|aktivalatlan|0 perces/.test(t)) return true;
+    if (/ciklus|használt|hasznalt|\d{2}\s*%|akku\s*\d|cserélt|cserelt|kipróbált/.test(t) && !/0\s*ciklus|bontatlan/.test(t)) return false;
+    if (/\bbontatlan|aktiválatlan|0 perces|vadonatúj|vadonatuj|\bújonnan\b/.test(t)) return true;
+    if (/(^|\s)(új|uj)[\s,!-]+(apple|iphone|ipad|macbook|bontatlan|garanciális)/.test(t) &&
+        !/(új|uj)\s*(akku|akksi|aksi|aku|kijelző|tok|fólia|folia|ház)/.test(t)) return true;
+    return false;
+  }
+
+  function grade(t) {
+    if (/karcos|átlagos|atlagos|erősen használt|erosen hasznalt|\bd,\s|"b"|\bb\b,? használt|sérült/.test(t)) return 'C';
+    if (/újszerű|ujszeru|karcmentes|hibátlan|hibatlan|makulátlan|mint az új|mint egy új|szinte új|új állapot|uj allapot|a\+|kvázi új|gyakorlatilag új/.test(t)) return 'A';
+    if (/kiváló|gyönyörű|gyonyoru|szép|szep|megkímélt|megkimelt|nagyon jó|"a"|\ba\b"? használt/.test(t)) return 'B';
+    return null;
+  }
+
+  function defect(t) {
+    return /hibás|hibas|face\s*id\s*nincs|fece\s*id|alkatrész|alkatresz|háttérvilágítás|kijelzőhibás|repedt|törött|one\s*függő|one\s*fuggo|hálózatfüggő|halozatfuggo|icloud\s*zár|zárolt|nem kapcsol|vízkár/.test(t);
+  }
+
+  function isDealer(raw, t) {
+    return /\(újszerű\)|\(kiváló\)|\(nagyon jó\)|\(jó\)|részletfizetés|&k\d+|\(flp|\(ffk|\(beszl|\(gd\d|macszerez|iking\.hu|üzletből|uzletbol|27\s*%\s*(áfa|áfá)|áfás|áfá-s|áfával|számla\s*\+\s*garancia|1 év garanciával|1[2-9] hónap garanci|1[2-9] hó garanci|\d\s*év garanci|\d{4}\s*(ibrány|budapest)|beszámítás|0\d{3}ab\b|0\d{3}ar\b|\(\d{3}\),/.test(t) ||
+      /^ÚJ Apple /.test(String(raw || ''));
+  }
+
+  function accessory(t) {
+    return /^\s*(magyar kiosztású )?billentyűzet|^\s*(tok|toll|pencil|töltő|kábel)\b|applecare\+? biztosítás|telefonszerviz|javítás a-z/.test(t);
+  }
+
+  // ---- modell ----
+  function iphoneModel(t) {
+    if (/iphone\s*duo\b/.test(t)) return 'iphone-duo';
+    if (/iphone\s*(17\s*)?air\b/.test(t)) return 'iphone-air';
+    const m = t.match(/iphone\s*(1[2-8])\s*(e\b|mini|plus|pro max|pro)?/);
+    if (!m) return null;
+    const gen = m[1]; const v = (m[2] || '').trim();
+    const suffix = { '': '', e: 'e', mini: '-mini', plus: '-plus', pro: '-pro', 'pro max': '-pro-max' }[v];
+    const id = 'iphone-' + gen + (suffix === 'e' ? 'e' : suffix);
+    return id;
+  }
+
+  function ipadModel(t) {
+    if (!/ipad/.test(t)) return null;
+    if (/ipad\s*air/.test(t)) {
+      if (/\bm\s*4\b/.test(t)) return 'ipad-air-m4';
+      if (/\bm\s*3\b/.test(t)) return 'ipad-air-m3';
+      if (/\bm\s*2\b|air\s*6\b|2024/.test(t)) return 'ipad-air-m2';
+      if (/\bm\s*1\b|air\s*5\b/.test(t)) return 'ipad-air-m1';
+      return null;
+    }
+    if (/ipad\s*mini/.test(t)) {
+      if (/oled|2026|mini\s*8/.test(t)) return 'ipad-mini-oled';
+      if (/a\s*17|2024|mini\s*7/.test(t)) return 'ipad-mini-a17';
+      return null;
+    }
+    if (/ipad\s*pro/.test(t)) {
+      if (/\bm\s*5\b/.test(t)) return 'ipad-pro-m5';
+      if (/\bm\s*4\b/.test(t)) return 'ipad-pro-m4';
+      return null;
+    }
+    if (/\ba\s*16\b|11\s*(th|\.)?\s*gen|11\s*\.?\s*generáció|ipad\s*11\b|ipad\s*\(?2025|11"\s*\(?2025/.test(t)) return 'ipad-a16';
+    if (/10[,.]2/.test(t)) {
+      if (/2021|9\s*(th|\.)/.test(t)) return 'ipad-9';
+      if (/2020|8\s*(th|\.)/.test(t)) return 'ipad-8';
+      if (/2019|7\s*(th|\.)/.test(t)) return 'ipad-7';
+    }
+    if (/10[,.]9|ipad\s*10\b|10\s*(th|\.)?\s*gen/.test(t)) return 'ipad-10';
+    const g = t.match(/ipad\s*(\d{1,2})\s*(th|\.)?\s*(gen|generáció|generation)?|(\d{1,2})\s*(th|\.)\s*(gen|generáció)/);
+    const n = g ? +(g[1] || g[4]) : null;
+    if (n === 9) return 'ipad-9';
+    if (n === 8) return 'ipad-8';
+    if (n === 7) return 'ipad-7';
+    if (n === 6) return 'ipad-6';
+    return null;
+  }
+
+  function macModel(t) {
+    if (!/macbook|mac\s*book/.test(t)) return null;
+    const air = /air/.test(t) && !/pro\s*air/.test(t);
+    const neo = /\bneo\b/.test(t);
+    if (neo) return { id: 'macbook-neo', tier: '' };
+    const chip = t.match(/\bm\s*([1-6])\b\s*(pro|max|ultra)?/);
+    if (!chip) {
+      if (/\bi[3579]\b|intel|201[5-9]|a1466|a1708|a1989|a2159|a2251|a1278|retina|touch\s*bar|11\.4|8\.3/.test(t)) return { id: 'mac-intel', tier: '' };
+      return null;
+    }
+    const n = +chip[1]; const tier = chip[2] || '';
+    if (air) return n <= 5 ? { id: 'mba-m' + n, tier: '' } : null;
+    if (n <= 5) return { id: 'mbp-m' + n, tier };
+    return null;
+  }
+
+  function screen(t, fam) {
+    const m = t.match(/\b(13|14|15|16)\s*([.,]\s*\d)?\s*("|''|'|inch|hüvelyk|col)?/);
+    if (!m) return null;
+    return +m[1];
+  }
+
+  function parseListing(raw, opts = {}) {
+    const today = opts.today || 2026.9;
+    const t = norm(raw);
+    const r = {
+      title: String(raw || '').trim(), modelId: null, family: null,
+      storage: null, ram: null, size: null, tier: '',
+      battery: null, batteryFresh: false, isNew: false, dealer: false,
+      warrantyMonths: null, grade: null, defect: false, cellular: false,
+      accessory: false, multi: false, bundle: false,
+    };
+    r.accessory = accessory(t);
+    r.bundle = /\+\s*(apple\s*)?(pencil|ceruza|smart\s*keyboard|magic\s*keyboard|billentyűzet)|ceruzával|tollal|keyboard\s*\(|smart keyboard/.test(t);
+    r.multi = /összes\s*(szín|tárhely)|minden\s*szín|\d+\s*-\s*\d+\s*gb|128\/256\/512|2 db/.test(t);
+    let id = iphoneModel(t);
+    if (id) { r.modelId = id; r.family = 'iphone'; r.storage = pickStorage(t); }
+    if (!id) { id = ipadModel(t); if (id) { r.modelId = id; r.family = 'ipad'; r.storage = pickStorage(t); r.cellular = /cellular|lte|\b5\s*g\b|gsm|sim/.test(t); } }
+    if (!id) {
+      const mm = macModel(t);
+      if (mm) {
+        r.modelId = mm.id; r.family = 'mac'; r.tier = mm.tier;
+        const mem = pickMacMem(t); r.ram = mem.ram; r.storage = mem.ssd;
+        r.size = screen(t);
+      }
+    }
+    const b = battery(t); r.battery = b.pct; r.batteryFresh = b.fresh;
+    r.isNew = isNewItem(t);
+    r.dealer = isDealer(raw, t);
+    r.warrantyMonths = warranty(t, today);
+    r.grade = grade(t);
+    r.defect = defect(t);
+    return r;
+  }
+
+  function parsePrice(s) {
+    const m = String(s || '').replace(/[\u00a0\u202f\u2009]/g, ' ').match(/(\d{1,3}(?:[ .]\d{3})+|\d+)\s*(ft|huf)?/i);
+    return m ? +m[1].replace(/[ .]/g, '') : null;
+  }
+
+  const api = { parseListing, parsePrice, norm };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.ALMA_PARSE = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* AlmaRadar – „fair ár” modell.
+ * Log-lineáris modell családonként (iPhone, iPad, Mac):
+ *   ln(ár) = életkor + változat (Pro, Max, mini…) + modell-saját eltérés (zsugorítva)
+ *          + tárhely + memória + képernyő + kereskedő/garancia + új/bontatlan + akku + állapot
+ * A modell-saját eltérést ridge-büntetés húzza a közös görbe felé, így kevés hirdetésből
+ * is értelmes becslés jön, és a sosem látott modellekre is ad árat.
+ * Itt csak a sorépítés és a becslés van; az illesztés a pipeline/fit.js-ben. */
+(function (root) {
+  'use strict';
+  const CAT = (typeof module !== 'undefined' && module.exports) ? require('./catalog.js') : root.ALMA_CATALOG;
+
+  const VARIANTS = {
+    iphone: ['mini', 'plus', 'pro', 'promax', 'e', 'air', 'duo'],
+    ipad: ['air', 'mini', 'pro'],
+    mac: ['pro', 'neo', 'intel'],
+  };
+
+  // Jellemzők neve és értéke egy hirdetéshez. `modelIds` a családban illesztett modellek listája.
+  function features(p, fam, today, modelIds) {
+    const m = CAT.byId[p.modelId];
+    const f = {};
+    f.const = 1;
+    const age = Math.max(0, today - m.rel);
+    f.age = age;
+    f.age2 = age * age;
+    for (const v of VARIANTS[fam]) f['v_' + v] = m.variant === v ? 1 : 0;
+    const storage = p.storage || m.base;
+    f.storage = Math.log2(storage / m.base);
+    f.dealer = p.dealer ? 1 : 0;
+    f.isNew = p.isNew ? 1 : 0;
+    f.battKnown = (p.battery != null && !p.isNew) ? 1 : 0;
+    f.batt = f.battKnown ? (p.battery - 90) / 10 : 0;
+    f.gradeA = p.grade === 'A' ? 1 : 0;
+    if (fam === 'ipad') f.cellular = p.cellular ? 1 : 0;
+    if (fam === 'mac') {
+      const ram = p.ram || m.ram;
+      f.ram = Math.log2(ram / 8);
+      f.big = (p.size === 15 || p.size === 16) ? 1 : 0;
+      f.tierPro = p.tier === 'pro' ? 1 : 0;
+      f.tierMax = p.tier === 'max' ? 1 : 0;
+    }
+    for (const id of modelIds) f['m_' + id] = p.modelId === id ? 1 : 0;
+    return f;
+  }
+
+  function predict(coef, p) {
+    const fam = p.family;
+    const c = coef && coef[fam];
+    if (!c || !CAT.byId[p.modelId]) return null;
+    const f = features(p, fam, coef.today, c.modelIds);
+    let s = 0;
+    for (const k in c.beta) s += (f[k] || 0) * c.beta[k];
+    const fair = Math.exp(s);
+    const m = CAT.byId[p.modelId];
+    const ref = { iphone: 'base', ipad: 'base', mac: 'air' }[fam];
+    const variantKnown = m.variant === ref || ('v_' + m.variant) in c.beta;
+    const seen = c.modelIds.includes(p.modelId);
+    return {
+      reliable: seen || (variantKnown && (coef.today - m.rel) >= (c.ageMin || 0) - 0.15),
+      fair,
+      low: fair * Math.exp(-0.674 * c.sigma),
+      high: fair * Math.exp(0.674 * c.sigma),
+      sigma: c.sigma,
+      seen,
+      n: (c.counts && c.counts[p.modelId]) || 0,
+    };
+  }
+
+  // Ár / fair ár eltérés -> ítélet
+  function verdict(dev) {
+    if (dev <= -0.3) return { key: 'suspicious', label: 'Gyanúsan olcsó' };
+    if (dev <= -0.1) return { key: 'good', label: 'Jó vétel' };
+    if (dev < 0.1) return { key: 'fair', label: 'Korrekt ár' };
+    return { key: 'pricey', label: 'Drága' };
+  }
+
+  const api = { features, predict, verdict, VARIANTS };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.ALMA_MODEL = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>
+(function(){
+'use strict';
+const C = window.ALMA_CATALOG, P = window.ALMA_PARSE, MDL = window.ALMA_MODEL;
+const $ = s => document.querySelector(s);
+const fmt = n => n == null ? '–' : new Intl.NumberFormat('hu-HU').format(Math.round(n)) + ' Ft';
+const fmtK = n => n == null ? '–' : (n >= 1e6 ? (n/1e6).toFixed(2).replace('.', ',') + '\u00a0millió' : Math.round(n/1000) + '\u00a0ezer');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pctTxt = d => (d > 0 ? '+' : '−') + Math.abs(Math.round(d * 100)) + '%';
+const VLAB = { good:'Jó vétel', fair:'Korrekt ár', pricey:'Drága', suspicious:'Gyanúsan olcsó', defect:'Hibás / függő' };
+const store = { get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+                set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
+let MK, LS, HIST = {};
+
+Promise.all([fetch('data/market.json').then(r => r.json()), fetch('data/listings.json').then(r => r.json()), fetch('data/history.json').then(r => r.json()).catch(() => ({}))])
+  .then(([m, l, h]) => { MK = m; LS = l; HIST = h; init(); })
+  .catch(() => { $('#result').innerHTML = '<p class="note">Az adatfájlok nem töltődtek be. Frissítsd az oldalt.</p>'; });
+
+function init(){
+  const d = MK.snapshot.replace(/-/g, '.') + '.';
+  $('#stamp').textContent = d + ' · ' + MK.counts.usable + ' hirdetés';
+  $('#nlist').textContent = MK.counts.usable;
+  $('#foot').innerHTML = 'AlmaRadar prototípus · adatok: ' + d + ' · ' + MK.counts.usable + ' értelmezett hirdetés (' +
+    (MK.counts.byFamily.iphone||0) + ' iPhone, ' + (MK.counts.byFamily.ipad||0) + ' iPad, ' + (MK.counts.byFamily.mac||0) + ' Mac) · új árak: ' +
+    MK.sources.map(s => esc(s.name)).join(', ') + '. Független oldal, nem kapcsolódik az Apple Inc.-hez.';
+  initChecker(); initSell(); initBudget(); initDeals(); initMarket(); initModels(); initAlerts();
+}
+
+/* ---------------- ár-ellenőrző ---------------- */
+const SAMPLES = [
+  ['iPhone 15 Pro 128GB Kék- 85% akkumulátor', 185000],
+  ['iPhone 13 128GB Fekete 95% Akkumulátor', 69990],
+  ['Apple iPad 11" A16 2025 11.gen WiFi 128GB Silver 93% akku', 115000],
+  ['MacBook Air M1 8/256 GB', 140000],
+  ['iPhone Air - világos arany - 256 Gb - Független', 155000],
+];
+function initChecker(){
+  const s = $('#samples');
+  s.innerHTML = '<span class="sub" style="align-self:center;margin-right:4px">Példák:</span>' + SAMPLES.map((x, i) => `<button type="button" data-i="${i}">${esc(x[0].split(/\s+/).slice(0, 4).join(' '))}</button>`).join('');
+  s.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const x = SAMPLES[+b.dataset.i]; $('#q').value = x[0]; $('#qp').value = new Intl.NumberFormat('hu-HU').format(x[1]); runCheck(); });
+  $('#checker').addEventListener('submit', e => { e.preventDefault(); runCheck(); });
+  $('#q').addEventListener('input', debounce(runCheck, 350));
+  $('#qp').addEventListener('input', debounce(runCheck, 350));
+  $('#q').value = SAMPLES[0][0]; $('#qp').value = new Intl.NumberFormat('hu-HU').format(SAMPLES[0][1]);
+  runCheck();
+}
+function debounce(f, ms){ let t; return () => { clearTimeout(t); t = setTimeout(f, ms); }; }
+
+function gaugeHTML(price, fair){
+  // skála: fair × (0.55 … 1.30); zónák: ≤0.70 gyanús, ≤0.90 jó, <1.10 korrekt, felette drága
+  const lo = 0.55, hi = 1.30, pos = r => ((Math.min(hi, Math.max(lo, r)) - lo) / (hi - lo)) * 100;
+  const z = [lo, 0.70, 0.90, 1.10, hi].map(pos);
+  const w = [z[1]-z[0], z[2]-z[1], z[3]-z[2], z[4]-z[3]];
+  const needle = price ? `<div class="needle" style="left:${pos(price / fair)}%" data-l="${fmtK(price)}"></div>` : '';
+  return `<div class="gauge" role="img" aria-label="Ár a fair árhoz képest">
+    <div class="bar"><i class="z1" style="flex-basis:${w[0]}%"></i><i class="z2" style="flex-basis:${w[1]}%"></i><i class="z3" style="flex-basis:${w[2]}%"></i><i class="z4"></i></div>
+    <div class="tick" style="left:${pos(1)}%"></div>${needle}
+    <div class="lab" style="left:${(z[0]+z[1])/2}%">gyanús</div><div class="lab" style="left:${(z[1]+z[2])/2}%">jó vétel</div>
+    <div class="lab" style="left:${pos(1)}%">fair ${fmtK(fair)}</div><div class="lab" style="left:${(z[3]+z[4])/2}%">drága</div></div>`;
+}
+
+function runCheck(){
+  const title = $('#q').value.trim();
+  const price = P.parsePrice($('#qp').value) || null;
+  const box = $('#result');
+  if (!title) { box.innerHTML = '<p class="note">Írd be egy hirdetés címét, például: „iPhone 14 Pro 128GB 89% akku”.</p>'; return; }
+  const p = P.parseListing(title, { today: MK.coef.today });
+  if (!p.modelId) {
+    box.innerHTML = `<div class="eyebrow">Nem ismertük fel</div><p>Nem találtunk benne iPhone-, iPad- vagy MacBook-modellt. Írd bele a pontos nevet, például „iPhone 14 Pro 128GB” vagy „MacBook Air M2 8/256”.</p><p class="note">Apple Watch és AirPods használt árát a következő verzió hozza.</p>`;
+    return;
+  }
+  const m = C.byId[p.modelId];
+  const pr = MDL.predict(MK.coef, p);
+  const chips = [
+    ['modell', m.name], ['tárhely', p.storage ? (p.storage >= 1024 ? p.storage/1024 + ' TB' : p.storage + ' GB') : null],
+    p.family === 'mac' ? ['RAM', p.ram ? p.ram + ' GB' : null] : null,
+    ['akku', p.batteryFresh ? 'új akku' : (p.battery ? p.battery + '%' : null)],
+    ['állapot', {A:'újszerű', B:'szép', C:'használt'}[p.grade] || null],
+    ['eladó', p.dealer ? 'kereskedő' : 'magánszemély'],
+    ['garancia', p.warrantyMonths ? p.warrantyMonths + ' hó' : null],
+    p.isNew ? ['', 'új / bontatlan'] : null,
+  ].filter(Boolean).map(([k, v]) => v ? `<span class="chip">${k ? k + ': ' : ''}${esc(v)}</span>` : `<span class="chip miss">${k}</span>`).join('');
+  if (!pr || !pr.reliable) {
+    box.innerHTML = `<div class="chips">${chips}</div><p><b>${esc(m.name)}</b>: erre a modellre még nincs elég mai hirdetés megbízható becsléshez.</p>${newPriceLine(m)}`;
+    return;
+  }
+  const dev = price ? price / pr.fair - 1 : null;
+  const v = dev != null ? (p.defect ? {key:'defect', label:VLAB.defect} : MDL.verdict(dev)) : null;
+  const same = LS.filter(x => x.m === p.modelId && !x.df).map(x => Object.assign({}, x, { gap: Math.abs((x.s || m.base) - (p.storage || m.base)) }))
+    .sort((a, b) => a.gap - b.gap || Math.abs(a.p - (price || pr.fair)) - Math.abs(b.p - (price || pr.fair))).slice(0, 4);
+  let msg = '';
+  if (v && v.key === 'suspicious') msg = `<div class="warnbox">Ez ${pctTxt(dev).replace('−','')}-kal a fair ár alatt van. Ilyenkor gyakran van valami gond: hálózatfüggés, cserélt alkatrész, iCloud-zár vagy átverés. Csak személyesen, kipróbálva vedd meg.</div>`;
+  if (p.defect) msg = `<div class="warnbox">A cím hibát vagy függőséget említ (pl. Face ID nincs, hálózatfüggő). A fair ár ép gépre vonatkozik.</div>`;
+  box.innerHTML = `
+    <div class="verdict"><div><div class="sub">${price ? 'Kért ár' : 'Fair ár'}</div><div class="big num">${fmt(price || pr.fair)}</div></div>
+      ${v ? `<span class="pill ${v.key}">${v.label} · ${pctTxt(dev)}</span>` : ''}</div>
+    ${gaugeHTML(price, pr.fair)}
+    <div class="kv"><div><b class="num">${fmt(pr.fair)}</b><span>fair ár ugyanilyen gépre</span></div>
+      <div><b class="num">${Math.round(pr.low/1000)}–${fmtK(pr.high)}</b><span>szokásos sáv (Ft)</span></div>
+      <div><b class="num">${pr.n}</b><span>mai hirdetés ebből a modellből</span></div></div>
+    <div class="chips">${chips}</div>
+    ${msg}
+    ${checklist(p, m)}
+    ${same.length ? `<div><div class="eyebrow" style="margin-bottom:8px">Hasonló hirdetések ma</div><div class="comps">${same.map(compRow).join('')}</div></div>` : ''}
+    ${newPriceLine(m)}`;
+}
+function checklist(p, m){
+  const ask = [];
+  if (p.battery == null && !p.batteryFresh && !p.isNew) ask.push('Hány százalékos az akkumulátor állapota? (Beállítások › Akkumulátor › Állapot)');
+  if (!p.storage) ask.push('Mekkora a tárhely?');
+  if (!/független|fuggetlen|unlocked/i.test(p.title) && m.family !== 'mac') ask.push('Kártyafüggetlen a készülék?');
+  if (!p.grade && !p.isNew) ask.push('Van rajta karc, ütés, repedés? Küldenél róla pár fotót nappali fényben?');
+  if (!p.warrantyMonths && !p.isNew) ask.push('Van hozzá számla vagy garancia?');
+  ask.push('Ki van léptetve az iCloudból, és a Lokátor (Find My) ki van kapcsolva?');
+  if (m.family !== 'mac') ask.push('Volt cserélve kijelző, akku vagy kamera? (Beállítások › Általános › Névjegy › Alkatrész- és szervizelőzmények)');
+  const msg = 'Szia! Érdekelne a(z) ' + m.name + '. Pár kérdés:\n' + ask.map(q => '– ' + q).join('\n') + '\nKöszönöm!';
+  const fixed = ['Átvételkor a sorozatszámot ellenőrizd a checkcoverage.apple.com oldalon: ott látszik a modell és a garancia.',
+    'A Beállításokban látható IMEI egyezzen a dobozon lévővel.', 'Próbáld ki a Face ID-t / Touch ID-t, a kamerákat, a hangszórót és a töltést.',
+    'Fizess csak akkor, ha a gépet a szemed előtt állította vissza gyári állapotra.'];
+  return `<details class="qa card" style="padding:14px 16px"><summary>Vásárlás előtti ellenőrzőlista (${ask.length} kérdés az eladónak)</summary>
+    <div class="check" style="margin-top:12px"><ul>${ask.map(q => `<li class="ask"><span>${esc(q)}</span></li>`).join('')}${fixed.map(q => `<li><span>${esc(q)}</span></li>`).join('')}</ul>
+    <button type="button" class="btn ghost copy" data-copy="${esc(msg)}">Kérdések másolása üzenetbe</button></div></details>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-copy]'); if (!b) return;
+  const txt = b.dataset.copy; const done = () => { const o = b.textContent; b.textContent = 'Kimásolva'; setTimeout(() => b.textContent = o, 1600); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, () => selectFallback(b, txt)); else selectFallback(b, txt);
+});
+function selectFallback(b, txt){
+  let pre = b.parentElement.querySelector('pre.fallback');
+  if (!pre) { pre = document.createElement('pre'); pre.className = 'fallback'; pre.style.cssText = 'white-space:pre-wrap;user-select:all;background:var(--sunk);padding:10px;border-radius:8px;font-size:13px'; b.before(pre); }
+  pre.textContent = txt; const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+}
+function compRow(x){
+  return `<a class="comp" href="${esc(x.u)}" target="_blank" rel="noopener"><span class="t">${esc(x.t)}</span><b>${fmt(x.p)}</b>${x.v ? `<span class="pill ${x.v}">${pctTxt(x.dev)}</span>` : '<span></span>'}</a>`;
+}
+function bestNew(m){
+  const out = [];
+  if (m.apple) { const st = Object.keys(m.apple)[0]; out.push({ src:'Apple', price:m.apple[st], st:+st }); }
+  if (m.shop) { const st = Object.keys(m.shop)[0]; out.push({ src:m.shop[st][1], price:m.shop[st][0], st:+st }); }
+  return out;
+}
+function newPriceLine(m){
+  const b = bestNew(m); if (!b.length) return '';
+  return `<p class="note">Újonnan: ${b.map(x => `${esc(x.src)} ${fmt(x.price)}`).join(' · ')}${m.note ? ' · ' + esc(m.note) : ''}</p>`;
+}
+
+/* ---------------- eladnád ---------------- */
+function initSell(){
+  const sel = $('#sm');
+  sel.innerHTML = ['iphone', 'ipad', 'mac'].map(f => `<optgroup label="${C.FAMILIES[f]}">` + C.models.filter(m => m.family === f && (MK.models[m.id] || {}).fair)
+    .sort((a, b) => b.rel - a.rel || variantRank(b) - variantRank(a)).map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join('') + '</optgroup>').join('');
+  sel.value = 'iphone-14-pro';
+  const fillStor = () => { const m = C.byId[sel.value]; const st = Object.keys((MK.models[m.id] || {}).byStorage || { [m.base]: 1 });
+    const all = [...new Set([m.base, ...st.map(Number), m.base * 2, m.base * 4])].filter(x => x <= 2048).sort((a, b) => a - b);
+    $('#ss').innerHTML = all.map(x => `<option value="${x}">${x >= 1024 ? x / 1024 + ' TB' : x + ' GB'}</option>`).join(''); };
+  sel.addEventListener('change', () => { fillStor(); renderSell(); });
+  ['#ss', '#sb', '#sg', '#sbox', '#scol'].forEach(id => $(id).addEventListener('input', renderSell));
+  fillStor(); renderSell();
+}
+function projectFactor(fam, m, dyears){
+  const b = MK.coef[fam].beta; const a = MK.coef.today - m.rel;
+  return Math.exp((b.age || 0) * dyears + (b.age2 || 0) * ((a + dyears) ** 2 - a ** 2));
+}
+function renderSell(){
+  const m = C.byId[$('#sm').value]; const st = +$('#ss').value; const g = $('#sg').value;
+  const bat = Math.min(100, Math.max(60, +String($('#sb').value).replace(/\D/g, '') || 88));
+  const out = $('#sout');
+  if (g === 'D') { out.innerHTML = `<div class="card empty">Hibás gépre nem adunk becslést: az ár a hiba fajtájától függ. Javíttatás előtt kérj árajánlatot, és vesd össze a lenti „szép” állapotú fair árral.</div>`; return; }
+  const p = { modelId: m.id, family: m.family, storage: st, battery: bat, grade: g === 'A' ? 'A' : 'B', dealer: false, isNew: false, ram: m.ram, size: m.size, tier: '' };
+  const pr = MDL.predict(MK.coef, p);
+  if (!pr || !pr.reliable) { out.innerHTML = '<div class="card empty">Erre a modellre még nincs elég adat.</div>'; return; }
+  let fair = pr.fair, low = pr.low, high = pr.high;
+  if (g === 'C') { high = fair; fair = low; low = low * Math.exp(-0.674 * pr.sigma); }
+  if ($('#sbox').value === '0') { fair *= 0.97; low *= 0.97; high *= 0.97; }
+  const r1000 = x => Math.round(x / 1000) * 1000;
+  const dealerResale = MDL.predict(MK.coef, Object.assign({}, p, { dealer: true, grade: 'A', battery: 100 }));
+  const f6 = projectFactor(m.family, m, 0.5), f12 = projectFactor(m.family, m, 1);
+  const perMonth = fair * (1 - projectFactor(m.family, m, 1 / 12));
+  const stTxt = st >= 1024 ? st / 1024 + ' TB' : st + ' GB';
+  const cond = { A: 'újszerű, karcmentes', B: 'szép állapotú, apró használati nyomokkal', C: 'használt, látható karcokkal' }[g];
+  const ad = `${m.name} ${stTxt} ${$('#scol').value.trim()} – ${g === 'A' ? 'újszerű' : g === 'B' ? 'szép állapot' : 'használt'}, ${bat}% akku\n\n` +
+    `Eladó a(z) ${m.name} ${stTxt}, ${cond}. Akkumulátor állapota: ${bat}%.${m.family !== 'mac' ? ' Kártyafüggetlen.' : ''} ` +
+    `${$('#sbox').value === '1' ? 'Doboz és számla megvan. ' : ''}iCloudból kiléptetve, gyári állapotra visszaállítva adom át.\n` +
+    `Személyes átvétel, kipróbálható.\n\nÁr: ${new Intl.NumberFormat('hu-HU').format(r1000(high))} Ft`;
+  // vetítés: 0–12 hónap
+  const W = 560, H = 150, L = 8, R = 8, T = 16, B = 26;
+  const ys = Array.from({ length: 13 }, (_, i) => fair * projectFactor(m.family, m, i / 12));
+  const ymax = ys[0] * 1.05, ymin = ys[12] * 0.9;
+  const X = i => L + i / 12 * (W - L - R), Y = v => T + (1 - (v - ymin) / (ymax - ymin)) * (H - T - B);
+  const path = ys.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+  const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Becsült érték a következő 12 hónapban">
+    <path d="${path} L ${X(12)} ${H - B} L ${X(0)} ${H - B} Z" fill="var(--accent-soft)"/><path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+    ${[0, 6, 12].map(i => `<circle cx="${X(i)}" cy="${Y(ys[i])}" r="4" fill="var(--accent)"/><text x="${X(i) + (i === 12 ? -6 : 6)}" y="${Y(ys[i]) - 8}" font-size="12" text-anchor="${i === 12 ? 'end' : 'start'}" fill="var(--ink)" font-family="JetBrains Mono, monospace">${Math.round(ys[i] / 1000)} ezer</text>`).join('')}
+    ${['ma', '+6 hónap', '+12 hónap'].map((t, k) => `<text x="${X(k * 6) + (k === 2 ? -2 : k === 1 ? 0 : 2)}" y="${H - 8}" font-size="12" text-anchor="${k === 2 ? 'end' : k === 1 ? 'middle' : 'start'}" fill="var(--muted)" font-family="JetBrains Mono, monospace">${t}</text>`).join('')}</svg>`;
+  out.innerHTML = `
+    <div class="tiers">
+      <div class="card tier"><span>Gyors eladás, pár napon belül</span><b class="num">${fmt(r1000(low))}</b><span>a hirdetések olcsóbb negyede</span></div>
+      <div class="card tier mid"><span>Korrekt ár</span><b class="num">${fmt(r1000(fair))}</b><span>ennyit kér ma egy ugyanilyen gép</span></div>
+      <div class="card tier"><span>Ha ráérsz, ennyit kérj</span><b class="num">${fmt(r1000(high))}</b><span>a hirdetések drágább negyede</span></div>
+    </div>
+    <div class="card proj"><div class="eyebrow">Ha vársz vele</div>
+      <p style="margin:6px 0 10px">Ez a gép a mai görbe szerint havonta kb. <b>${fmt(r1000(perMonth))}</b>-ot veszít az értékéből: fél év múlva kb. <b>${fmt(r1000(fair * f6))}</b>, egy év múlva kb. <b>${fmt(r1000(fair * f12))}</b>. Szeptemberben, az új iPhone-ok megjelenésekor ez általában gyorsul.</p>
+      ${svg}</div>
+    ${dealerResale && dealerResale.reliable ? `<p class="note">Kereskedők ugyanezt felújítva, 12 hó garanciával kb. ${fmt(r1000(dealerResale.fair))}-ért adják tovább. Ha nekik adod el vagy beszámíttatod, ennél jóval kevesebbet kapsz. A felvásárlási ajánlatok összehasonlítása a következő verzióban jön.</p>` : ''}
+    <div class="card adtext"><div class="eyebrow">Kész hirdetésszöveg</div><pre>${esc(ad)}</pre>
+      <button type="button" class="btn ghost copy" data-copy="${esc(ad)}">Szöveg másolása</button></div>`;
+}
+
+/* ---------------- mit kapok ---------------- */
+let bFam = 'iphone';
+function initBudget(){
+  const r = $('#brange');
+  const upd = () => { $('#bval').textContent = fmt(+r.value); renderBudget(+r.value); };
+  r.addEventListener('input', upd);
+  $('#bfam').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; bFam = b.dataset.f;
+    [...$('#bfam').children].forEach(x => x.setAttribute('aria-pressed', x === b)); upd(); });
+  upd();
+}
+function renderBudget(budget){
+  const opts = [];
+  for (const m of C.models.filter(x => x.family === bFam)) {
+    const s = MK.models[m.id] || {};
+    for (const nb of bestNew(m)) if (nb.price <= budget) opts.push({ m, kind:'new', price:nb.price, src:nb.src });
+    const minNew = Math.min(...bestNew(m).map(x => x.price), Infinity);
+    if (s.fairDealer && s.fairDealer <= budget && s.fairDealer < minNew * 0.97) opts.push({ m, kind:'dealer', price:s.fairDealer });
+    if (s.fair && s.fair <= budget) opts.push({ m, kind:'used', price:s.fair });
+  }
+  // modellenként a legjobb (legkevésbé kockázatos) mód, ami belefér: új > kereskedő > magán
+  const rank = { new:3, dealer:2, used:1 };
+  const best = {};
+  for (const o of opts) { const b = best[o.m.id]; if (!b || rank[o.kind] > rank[b.kind] || (rank[o.kind] === rank[b.kind] && o.price < b.price)) best[o.m.id] = o; }
+  const list = Object.values(best).filter(o => !o.m.eol).sort((a, b) => b.m.rel - a.m.rel || variantRank(b.m) - variantRank(a.m)).slice(0, 9);
+  if (!list.length) { $('#opts').innerHTML = `<div class="card empty">Ebből a keretből ma nem jön ki ${C.FAMILIES[bFam]}. Húzd feljebb a csúszkát.</div>`; return; }
+  $('#opts').innerHTML = list.map(o => {
+    const deal = LS.filter(x => x.m === o.m.id && (x.v === 'good' || x.v === 'fair') && x.p <= budget && !x.n).sort((a, b) => a.dev - b.dev)[0];
+    const tag = { new:['új', ''], dealer:['garanciával', 'ref'], used:['magánszemélytől', 'used'] }[o.kind];
+    const why = o.kind === 'new' ? 'új ár: ' + esc(o.src) : o.kind === 'dealer' ? 'kereskedőtől, újszerű, 12 hó garancia' : 'szép állapot, 90% akku';
+    return `<div class="card opt"><div><span class="tag ${tag[1]}">${tag[0]}</span></div>
+      <h3>${esc(o.m.name)}</h3><div class="p num">${fmt(o.price)}</div><div class="sub">${why}${o.kind !== 'new' && !(MK.models[o.m.id] || {}).n ? ' · <b>becslés</b>, ma nincs hirdetés' : ''}</div>
+      <div class="support">szoftverfrissítés kb. <b>${C.supportUntil(o.m)}</b>-ig</div>
+      ${deal ? `<a class="sub" href="${esc(deal.u)}" target="_blank" rel="noopener">Mai hirdetés: ${fmt(deal.p)} →</a>` : ''}</div>`;
+  }).join('');
+}
+function variantRank(m){ return { promax:6, pro:5, duo:7, air:4, plus:3, base:2, e:1, mini:1 }[m.variant] || 0; }
+
+/* ---------------- mai vételek ---------------- */
+let dFam = 'all';
+function initDeals(){
+  $('#dfam').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; dFam = b.dataset.f;
+    [...$('#dfam').children].forEach(x => x.setAttribute('aria-pressed', x === b)); renderDeals(); });
+  renderDeals();
+}
+function renderDeals(){
+  const rows = LS.filter(x => (x.v === 'good' || x.v === 'suspicious') && !x.n && (dFam === 'all' || x.f === dFam))
+    .sort((a, b) => (a.v === 'suspicious') - (b.v === 'suspicious') || a.dev - b.dev).slice(0, 14);
+  $('#deals').innerHTML = rows.map(x => {
+    const m = C.byId[x.m];
+    const meta = [m.name, x.s ? (x.s >= 1024 ? x.s/1024 + ' TB' : x.s + ' GB') : '', x.b ? x.b + '% akku' : (x.bf ? 'új akku' : ''), x.dl ? 'kereskedő' : 'magánszemély', x.w ? x.w + ' hó gar.' : ''].filter(Boolean).join(' · ');
+    return `<tr><td><a class="tt" href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)}</a><span class="ms">${esc(meta)}</span></td>
+      <td class="r num"><b>${fmt(x.p)}</b></td><td class="r num">${fmt(x.fair)}</td><td class="r"><span class="dev neg">${pctTxt(x.dev)}</span></td>
+      <td class="r"><span class="pill ${x.v}">${VLAB[x.v]}</span></td></tr>`;
+  }).join('') || '<tr><td colspan="5" class="empty">Ma nincs ilyen hirdetés ebben a kategóriában.</td></tr>';
+}
+
+/* ---------------- piac ---------------- */
+function initMarket(){
+  const ins = MK.insights.iphone; if (!ins) return;
+  $('#nfit').textContent = ins.n;
+  const D = [
+    [ins.perYear, 'egy évvel idősebb gép (2 évesnél)'],
+    [ins.dealer, 'kereskedőtől, garanciával'],
+    [ins.isNew, 'új, bontatlan darab'],
+    [ins.storageDouble, 'kétszer akkora tárhely'],
+    [ins.gradeA, '„újszerű / karcmentes” a címben'],
+    [ins.batt10, '+10 százalékpont akku'],
+  ];
+  $('#drivers').innerHTML = D.map(([v, t]) => `<div class="card drv"><b class="num ${v < 0 ? 'neg' : 'pos'}">${v > 0 ? '+' : '−'}${Math.abs(v).toFixed(v > -10 && v < 10 ? 1 : 0).replace('.', ',')}%</b><span>${t}</span></div>`).join('');
+  drawChart();
+  renderNVU();
+}
+function drawChart(){
+  const pts = C.models.filter(m => m.family === 'iphone' && MK.models[m.id] && MK.models[m.id].fair)
+    .map(m => ({ m, x: m.rel, y: MK.models[m.id].fair, n: MK.models[m.id].n }));
+  const W = 920, H = 340, L = 64, R = 24, T = 18, B = 40;
+  const x0 = 2020.5, x1 = 2026.3, y1 = Math.ceil(Math.max(...pts.map(p => p.y)) / 50000) * 50000;
+  const X = x => L + (x - x0) / (x1 - x0) * (W - L - R), Y = y => T + (1 - y / y1) * (H - T - B);
+  const col = v => v === 'pro' ? 'var(--accent)' : v === 'promax' ? 'var(--good)' : v === 'air' ? 'var(--pricey)' : 'var(--fair)';
+  let g = '';
+  for (let y = 0; y <= y1; y += 50000) g += `<line x1="${L}" x2="${W - R}" y1="${Y(y)}" y2="${Y(y)}" stroke="var(--line)"/><text x="${L - 10}" y="${Y(y) + 4}" text-anchor="end" font-size="12" fill="var(--muted)" font-family="JetBrains Mono, monospace">${y ? Math.round(y / 1000) + 'e' : '0'}</text>`;
+  for (let yr = 2021; yr <= 2026; yr++) g += `<text x="${X(yr)}" y="${H - 14}" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="JetBrains Mono, monospace">${yr}</text>`;
+  for (const v of ['base', 'pro', 'promax']) {
+    const s = pts.filter(p => p.m.variant === v).sort((a, b) => a.x - b.x);
+    if (s.length > 1) g += `<polyline fill="none" stroke="${col(v)}" stroke-width="2" opacity=".55" points="${s.map(p => X(p.x) + ',' + Y(p.y)).join(' ')}"/>`;
+  }
+  for (const p of pts) {
+    const short = p.m.name.replace('iPhone ', '');
+    const lbl = ['13','14','15','16','17','15 Pro','16 Pro Max','17 Pro Max','Air','13 Pro','14 Pro','17e','16e'].includes(short) || p.m.variant === 'promax' && p.x > 2024;
+    g += `<g><title>${esc(p.m.name)}: ${fmt(p.y)}${p.n ? ' · ' + p.n + ' mai hirdetés' : ' · becslés, nincs mai hirdetés'}</title>
+      <circle cx="${X(p.x)}" cy="${Y(p.y)}" r="${p.n ? 6 : 4.5}" fill="${p.n ? col(p.m.variant) : 'var(--surface)'}" stroke="${col(p.m.variant)}" stroke-width="2"/>
+      ${lbl ? `<text x="${X(p.x) + 9}" y="${Y(p.y) + 4}" font-size="12" fill="var(--ink)" font-family="Inter, sans-serif">${esc(short)}</text>` : ''}</g>`;
+  }
+  $('#dchart').innerHTML = `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" style="min-width:560px" role="img" aria-label="iPhone modellek fair ára a megjelenés éve szerint">${g}</svg></div>
+    <p class="note" style="margin:8px 0 0">Telt kör: van mai hirdetés. Üres kör: a modell becsült ára a közös görbéből. Vízszintesen a megjelenés éve.</p>`;
+}
+function renderNVU(){
+  const ids = ['iphone-17', 'iphone-air', 'iphone-17e', 'ipad-a16', 'mba-m5'];
+  $('#nvu').innerHTML = ids.map(id => {
+    const m = C.byId[id], s = MK.models[id] || {};
+    const st = m.base;
+    const rows = [];
+    if (m.apple && m.apple[st]) rows.push(['Apple, új', m.apple[st], '']);
+    if (m.shop && m.shop[st]) rows.push([m.shop[st][1] + ', új', m.shop[st][0], 'shop']);
+    const minNew = Math.min(...rows.map(r => r[1]), Infinity);
+    if (s.fairDealer && s.fairDealer < minNew * 0.97) rows.push(['kereskedő, garanciával', s.fairDealer, 'dealer']);
+    if (s.fair) rows.push(['magánszemélytől', s.fair, 'used']);
+    if (rows.length < 2) return '';
+    const max = Math.max(...rows.map(r => r[1]));
+    const save = rows[0][1] - rows[rows.length - 1][1];
+    const keep = Math.round(rows[rows.length - 1][1] / rows[0][1] * 100);
+    return `<div class="card nvu-row"><div><h3>${esc(m.name)}</h3><div class="sub">${st >= 1024 ? st/1024 + ' TB' : st + ' GB'} · használtan ${fmt(save)}-tal olcsóbb</div><div class="sub">értéktartás: <b>${keep}%</b> az Apple-árhoz képest</div></div>
+      <div class="bars">${rows.map(r => `<div class="bl"><span>${esc(r[0])}</span><div class="track"><div class="fill ${r[2]}" style="width:${(r[1] / max * 100).toFixed(1)}%"></div></div><b>${fmtK(r[1])}</b></div>`).join('')}</div></div>`;
+  }).join('');
+}
+
+/* ---------------- modellek ---------------- */
+let curModel = null;
+function initModels(){
+  const fams = ['iphone', 'ipad', 'mac', 'watch', 'airpods'];
+  let h = '';
+  for (const f of fams) {
+    h += `<div class="fam">${C.FAMILIES[f]}</div>`;
+    for (const m of C.models.filter(x => x.family === f).sort((a, b) => b.rel - a.rel || variantRank(b) - variantRank(a)))
+      h += `<button type="button" data-id="${m.id}"><span>${esc(m.name)}</span><span class="cnt">${(MK.models[m.id] || {}).n || ''}</span></button>`;
+  }
+  $('#mlist').innerHTML = h;
+  $('#mlist').addEventListener('click', e => { const b = e.target.closest('button[data-id]'); if (!b) return; location.hash = 'm-' + b.dataset.id; });
+  window.addEventListener('hashchange', fromHash);
+  fromHash(true);
+}
+function fromHash(initial){
+  const h = location.hash.slice(1);
+  if (h.startsWith('m-') && C.byId[h.slice(2)]) { showModel(h.slice(2)); if (initial !== true) $('#modellek').scrollIntoView({ behavior: 'smooth' }); }
+  else if (!curModel) showModel('iphone-15-pro');
+}
+function guideTable(m, s){
+  if (!s.byStorage) return '';
+  const cols = [['kopott', p => p.low], ['szép', p => p.fair], ['újszerű', null], ['kereskedő, 12 hó gar.', null]];
+  const rows = Object.keys(s.byStorage).map(Number).map(st => {
+    const base = { modelId: m.id, family: m.family, storage: st, battery: 90, grade: 'B', dealer: false, isNew: false, ram: m.ram, size: m.size, tier: '' };
+    const b = MDL.predict(MK.coef, base), a = MDL.predict(MK.coef, Object.assign({}, base, { grade: 'A', battery: 95 })),
+      d = MDL.predict(MK.coef, Object.assign({}, base, { dealer: true, grade: 'A', battery: 100 }));
+    const nw = (m.shop && m.shop[st] && m.shop[st][0]) || (m.apple && m.apple[st]);
+    return `<tr><td><b>${st >= 1024 ? st / 1024 + ' TB' : st + ' GB'}</b></td><td class="r num">${fmt(b.low)}</td><td class="r num hl">${fmt(b.fair)}</td><td class="r num">${fmt(a.fair)}</td>
+      <td class="r num">${nw && d.fair >= nw * 0.97 ? '–' : fmt(d.fair)}</td><td class="r num">${nw ? fmt(nw) : '–'}</td></tr>`;
+  }).join('');
+  return `<div><div class="eyebrow" style="margin-bottom:8px">Árkalauz tárhely és állapot szerint${m.family === 'mac' ? ' (alap memória)' : ''}</div>
+    <div class="guide"><table><thead><tr><th>Tárhely</th><th class="r">Kopott</th><th class="r">Szép</th><th class="r">Újszerű</th><th class="r">Kereskedőtől</th><th class="r">Új</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="note" style="margin-top:6px">Magánszemélytől. Kopott: a szokásos sáv alja. Újszerű: karcmentes, 95% akku.</p></div>`;
+}
+function trendBlock(id){
+  const pts = Object.keys(HIST).sort().map(d => ({ d, v: HIST[d][id] && HIST[d][id].fair })).filter(x => x.v);
+  if (!pts.length) return '';
+  if (pts.length < 3) return `<div class="trend"><div class="eyebrow">Ártrend</div><p class="note" style="margin:6px 0 0">A napi idősor ${pts[0].d.replace(/-/g, '.')}.-án indult. Pár nap múlva itt látod, merre megy a modell ára (mai fair ár: ${fmt(pts[pts.length - 1].v)}).</p></div>`;
+  const W = 560, H = 120, P = 10, vs = pts.map(p => p.v), lo = Math.min(...vs) * 0.97, hi = Math.max(...vs) * 1.03;
+  const X = i => P + i / (pts.length - 1) * (W - 2 * P), Y = v => P + (1 - (v - lo) / (hi - lo)) * (H - 2 * P - 14);
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.v).toFixed(1)).join(' ');
+  const ch = vs[vs.length - 1] / vs[0] - 1;
+  return `<div class="trend"><div class="eyebrow">Ártrend · ${pts.length} nap · ${ch >= 0 ? '+' : '−'}${Math.abs(ch * 100).toFixed(1).replace('.', ',')}%</div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Fair ár alakulása"><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+    <circle cx="${X(pts.length - 1)}" cy="${Y(vs[vs.length - 1])}" r="4" fill="var(--accent)"/>
+    <text x="${P}" y="${H - 2}" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">${pts[0].d}</text>
+    <text x="${W - P}" y="${H - 2}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">${pts[pts.length - 1].d}</text></svg></div>`;
+}
+function showModel(id){
+  curModel = id;
+  [...$('#mlist').querySelectorAll('button[data-id]')].forEach(b => b.setAttribute('aria-current', b.dataset.id === id));
+  const m = C.byId[id], s = MK.models[id] || {};
+  const ls = LS.filter(x => x.m === id).sort((a, b) => (a.dev ?? 0) - (b.dev ?? 0));
+  const stor = s.byStorage ? Object.entries(s.byStorage).map(([k, v]) => `<div><span>${k >= 1024 ? k/1024 + ' TB' : k + ' GB'}</span><b class="num">${fmt(v)}</b></div>`).join('') : '';
+  const nb = bestNew(m);
+  $('#mdetail').innerHTML = `
+    <div class="hd"><div><div class="eyebrow">${C.FAMILIES[m.family]} · megjelenés ${Math.floor(m.rel)}${m.approx ? ' (kb.)' : ''}</div><h3 style="margin-top:6px">${esc(m.name)}</h3></div>
+      <div class="support" style="text-align:right">${m.eol ? '<b>Nem kap több macOS-t</b><br>a macOS 26 az utolsó Intel Macekre' : `szoftverfrissítés kb.<br><b style="font-size:20px">${C.supportUntil(m)}</b>-ig`}</div></div>
+    ${s.fair ? `<div><div class="sub">Fair ár magánszemélytől (szép állapot, 90% akku)</div><div class="big num">${fmt(s.fair)}</div>
+      <div class="sub">szokásos sáv ${fmt(s.low)} – ${fmt(s.high)}${s.fairDealer ? ` · kereskedőtől garanciával kb. ${fmt(s.fairDealer)}` : ''}${s.seen ? '' : ' · <b>becslés, ma nincs hirdetés</b>'}</div></div>` :
+      `<p class="note">${m.family === 'watch' || m.family === 'airpods' ? 'Használt Apple Watch- és AirPods-árak a következő verzióban jönnek.' : 'Erre a modellre még nincs elég mai hirdetés megbízható becsléshez.'}</p>`}
+    ${guideTable(m, s)}
+    ${trendBlock(id)}
+    ${nb.length ? `<div><div class="eyebrow" style="margin-bottom:8px">Újonnan</div><div class="stor">${nb.map(x => `<div><span>${esc(x.src)} · ${x.st ? (x.st >= 1024 ? x.st/1024 + ' TB' : x.st + ' GB') : 'alap'}</span><b class="num">${fmt(x.price)}</b></div>`).join('')}</div>${m.note ? `<p class="note">${esc(m.note)}</p>` : ''}</div>` : ''}
+    ${ls.length ? `<div class="table"><div class="eyebrow" style="margin-bottom:8px">Mai hirdetések (${ls.length}), a legjobb vétellel kezdve</div><table><tbody>${ls.slice(0, 30).map(x => `<tr><td><a class="tt" href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)}</a><span class="ms">${[x.s ? (x.s >= 1024 ? x.s/1024 + ' TB' : x.s + ' GB') : '', x.b ? x.b + '% akku' : '', x.dl ? 'kereskedő' : '', x.fz ? 'jegelve' : '', x.bu ? 'tartozékkal' : ''].filter(Boolean).join(' · ')}</span></td><td class="r num"><b>${fmt(x.p)}</b></td><td class="r">${x.v ? `<span class="pill ${x.v}">${x.v === 'defect' ? 'hibás' : pctTxt(x.dev)}</span>` : ''}</td></tr>`).join('')}</tbody></table></div>` : ''}`;
+}
+
+/* ---------------- riasztás ---------------- */
+function initAlerts(){
+  $('#am').innerHTML = C.models.filter(m => ['iphone', 'ipad', 'mac'].includes(m.family) && (MK.models[m.id] || {}).n)
+    .sort((a, b) => a.family.localeCompare(b.family) || b.rel - a.rel).map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join('');
+  $('#am').value = 'iphone-14-pro';
+  $('#aform').addEventListener('submit', e => { e.preventDefault();
+    const a = store.get('alerts', []); a.unshift({ id: $('#am').value, max: P.parsePrice($('#amax').value) || 0, bat: +$('#abat').value });
+    store.set('alerts', a.slice(0, 8)); renderAlerts(a.slice(0, 8)); });
+  $('#alist').addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (!b) return;
+    const a = store.get('alerts', []); a.splice(+b.dataset.i, 1); store.set('alerts', a); renderAlerts(a); });
+  const saved = store.get('alerts', null);
+  renderAlerts(saved && saved.length ? saved : [{ id: 'iphone-14-pro', max: 150000, bat: 90, demo: true }]);
+}
+function renderAlerts(a){
+  if (!a.length) { $('#alist').innerHTML = '<div class="card empty">Még nincs figyelés. Adj hozzá egyet balra.</div>'; return; }
+  $('#alist').innerHTML = a.map((x, i) => {
+    const m = C.byId[x.id]; if (!m) return '';
+    const hits = LS.filter(l => l.m === x.id && l.p <= x.max && !l.df && (!x.bat || (l.b || 0) >= x.bat || l.bf)).sort((p, q) => p.p - q.p);
+    return `<div class="card al"><div class="hd"><b>${esc(m.name)} · max ${fmt(x.max)}${x.bat ? ' · akku ≥ ' + x.bat + '%' : ''}</b>
+      ${x.demo ? '<span class="tag used">példa</span>' : `<button type="button" data-i="${i}">Törlés</button>`}</div>
+      <div class="sub">${hits.length ? hits.length + ' találat a mai hirdetések közül:' : 'Ma nincs találat. Az éles verzió szól, ha jön.'}</div>
+      ${hits.length ? `<div class="comps">${hits.slice(0, 3).map(compRow).join('')}</div>` : ''}</div>`;
+  }).join('');
+}
+})();
+</script>

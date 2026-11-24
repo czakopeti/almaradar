@@ -1,0 +1,895 @@
+{
+ "snapshot": "2026-11-24",
+ "coef": {
+  "today": 2026.898,
+  "snapshot": "2026-11-24",
+  "iphone": {
+   "ageMin": 0.7,
+   "ageMax": 5.2,
+   "beta": {
+    "const": 12.78965,
+    "age": -0.2992,
+    "age2": 0.00511,
+    "v_mini": -0.09128,
+    "v_plus": 0.02552,
+    "v_pro": 0.21863,
+    "v_promax": 0.31556,
+    "v_e": -0.38174,
+    "v_air": -0.10001,
+    "storage": 0.08185,
+    "dealer": 0.15979,
+    "isNew": 0.25464,
+    "battKnown": -0.00542,
+    "batt": 0.03126,
+    "gradeA": 0.06829,
+    "m_iphone-13": -0.01141,
+    "m_iphone-13-mini": -0.00152,
+    "m_iphone-13-pro": 0.02059,
+    "m_iphone-13-pro-max": 0.0061,
+    "m_iphone-14": 0.02256,
+    "m_iphone-14-plus": 0.00719,
+    "m_iphone-14-pro": 0.0013,
+    "m_iphone-14-pro-max": -0.0465,
+    "m_iphone-15-pro": -0.01946,
+    "m_iphone-16": -0.00272,
+    "m_iphone-16-plus": -0.00677,
+    "m_iphone-16-pro": -0.00414,
+    "m_iphone-16-pro-max": 0.02858,
+    "m_iphone-16e": 0.00745,
+    "m_iphone-17": -0.00821,
+    "m_iphone-17-pro": 0.00536,
+    "m_iphone-17-pro-max": 0.01707,
+    "m_iphone-17e": -0.01381,
+    "m_iphone-air": -0.00167
+   },
+   "sigma": 0.1033,
+   "modelIds": [
+    "iphone-13",
+    "iphone-13-mini",
+    "iphone-13-pro",
+    "iphone-13-pro-max",
+    "iphone-14",
+    "iphone-14-plus",
+    "iphone-14-pro",
+    "iphone-14-pro-max",
+    "iphone-15-pro",
+    "iphone-16",
+    "iphone-16-plus",
+    "iphone-16-pro",
+    "iphone-16-pro-max",
+    "iphone-16e",
+    "iphone-17",
+    "iphone-17-pro",
+    "iphone-17-pro-max",
+    "iphone-17e",
+    "iphone-air"
+   ],
+   "counts": {
+    "iphone-13": 29,
+    "iphone-13-pro-max": 15,
+    "iphone-13-pro": 29,
+    "iphone-13-mini": 9,
+    "iphone-14-pro": 24,
+    "iphone-14-plus": 9,
+    "iphone-14": 11,
+    "iphone-14-pro-max": 8,
+    "iphone-15-pro": 86,
+    "iphone-16": 10,
+    "iphone-16-pro-max": 21,
+    "iphone-16-pro": 13,
+    "iphone-16-plus": 4,
+    "iphone-16e": 3,
+    "iphone-17-pro-max": 17,
+    "iphone-air": 7,
+    "iphone-17": 11,
+    "iphone-17-pro": 11,
+    "iphone-17e": 2
+   },
+   "nFit": 300,
+   "nAll": 319
+  },
+  "ipad": {
+   "ageMin": 1.7,
+   "ageMax": 8.7,
+   "beta": {
+    "const": 12.00576,
+    "age": -0.10231,
+    "age2": -0.0113,
+    "storage": 0.0476,
+    "dealer": 0.06692,
+    "isNew": 0.23761,
+    "battKnown": 0.10755,
+    "batt": -0.11594,
+    "gradeA": 0.11084,
+    "cellular": 0.18223,
+    "m_ipad-10": 0.04912,
+    "m_ipad-6": 0.01242,
+    "m_ipad-7": 0.04451,
+    "m_ipad-8": -0.1454,
+    "m_ipad-9": 0.05799,
+    "m_ipad-a16": -0.01864
+   },
+   "sigma": 0.1016,
+   "modelIds": [
+    "ipad-10",
+    "ipad-6",
+    "ipad-7",
+    "ipad-8",
+    "ipad-9",
+    "ipad-a16"
+   ],
+   "counts": {
+    "ipad-8": 7,
+    "ipad-a16": 18,
+    "ipad-9": 3,
+    "ipad-6": 4,
+    "ipad-10": 2,
+    "ipad-7": 2
+   },
+   "nFit": 35,
+   "nAll": 36
+  },
+  "mac": {
+   "ageMin": 0.7,
+   "ageMax": 8.4,
+   "beta": {
+    "const": 12.74996,
+    "age": -0.0338,
+    "age2": -0.01865,
+    "v_pro": 0.29832,
+    "v_intel": 0.13843,
+    "storage": 0.18151,
+    "dealer": 0.13634,
+    "isNew": 0.08657,
+    "battKnown": 0.08255,
+    "batt": -0.01246,
+    "gradeA": 0.11398,
+    "ram": 0.19304,
+    "big": 0.03523,
+    "tierPro": 0.11706,
+    "tierMax": 0.16667,
+    "m_mac-intel": 0.00231,
+    "m_mba-m1": 0.02485,
+    "m_mba-m2": -0.01185,
+    "m_mba-m3": 0.01997,
+    "m_mba-m4": -0.03082,
+    "m_mba-m5": -0.00942,
+    "m_mbp-m1": -0.0467,
+    "m_mbp-m2": 0.00818,
+    "m_mbp-m3": 0.0026,
+    "m_mbp-m4": 0.04336,
+    "m_mbp-m5": -0.00247
+   },
+   "sigma": 0.0765,
+   "modelIds": [
+    "mac-intel",
+    "mba-m1",
+    "mba-m2",
+    "mba-m3",
+    "mba-m4",
+    "mba-m5",
+    "mbp-m1",
+    "mbp-m2",
+    "mbp-m3",
+    "mbp-m4",
+    "mbp-m5"
+   ],
+   "counts": {
+    "mba-m5": 10,
+    "mba-m4": 7,
+    "mba-m3": 5,
+    "mba-m1": 10,
+    "mac-intel": 9,
+    "mba-m2": 2,
+    "mbp-m1": 6,
+    "mbp-m3": 9,
+    "mbp-m4": 2,
+    "mbp-m2": 1,
+    "mbp-m5": 3
+   },
+   "nFit": 60,
+   "nAll": 64
+  }
+ },
+ "models": {
+  "iphone-12": {
+   "n": 0,
+   "fair": 69500,
+   "low": 64900,
+   "high": 74600,
+   "seen": false,
+   "fairDealer": 90100,
+   "byStorage": {
+    "64": 69500
+   }
+  },
+  "iphone-12-mini": {
+   "n": 0,
+   "fair": 64200,
+   "low": 59900,
+   "high": 68900,
+   "seen": false,
+   "fairDealer": 83300,
+   "byStorage": {
+    "64": 64200
+   }
+  },
+  "iphone-12-pro": {
+   "n": 0,
+   "fair": 86500,
+   "low": 80700,
+   "high": 92800,
+   "seen": false,
+   "fairDealer": 112200,
+   "byStorage": {
+    "128": 86500
+   }
+  },
+  "iphone-12-pro-max": {
+   "n": 0,
+   "fair": 96500,
+   "low": 90000,
+   "high": 103400,
+   "seen": false,
+   "fairDealer": 125100,
+   "byStorage": {
+    "128": 96500
+   }
+  },
+  "iphone-13": {
+   "n": 29,
+   "fair": 85400,
+   "low": 79700,
+   "high": 91600,
+   "seen": true,
+   "fairDealer": 110700,
+   "byStorage": {
+    "128": 85400,
+    "256": 92700
+   },
+   "median": 98910,
+   "min": 60000
+  },
+  "iphone-13-mini": {
+   "n": 9,
+   "fair": 78800,
+   "low": 73500,
+   "high": 84400,
+   "seen": true,
+   "fairDealer": 102100,
+   "byStorage": {
+    "128": 78800,
+    "256": 85500
+   },
+   "median": 85000,
+   "min": 35000
+  },
+  "iphone-13-pro": {
+   "n": 29,
+   "fair": 109800,
+   "low": 102400,
+   "high": 117700,
+   "seen": true,
+   "fairDealer": 142300,
+   "byStorage": {
+    "128": 109800,
+    "256": 119100,
+    "512": 129300
+   },
+   "median": 129990,
+   "min": 89990
+  },
+  "iphone-13-pro-max": {
+   "n": 15,
+   "fair": 119200,
+   "low": 111200,
+   "high": 127800,
+   "seen": true,
+   "fairDealer": 154500,
+   "byStorage": {
+    "128": 119200,
+    "256": 129400
+   },
+   "median": 129990,
+   "min": 80000
+  },
+  "iphone-14": {
+   "n": 11,
+   "fair": 113600,
+   "low": 106000,
+   "high": 121800,
+   "seen": true,
+   "fairDealer": 147300,
+   "byStorage": {
+    "128": 113600,
+    "256": 123300
+   },
+   "median": 119990,
+   "min": 70000
+  },
+  "iphone-14-plus": {
+   "n": 9,
+   "fair": 117800,
+   "low": 109900,
+   "high": 126300,
+   "seen": true,
+   "fairDealer": 152700,
+   "byStorage": {
+    "128": 117800,
+    "256": 127800
+   },
+   "median": 119999,
+   "min": 85000
+  },
+  "iphone-14-pro": {
+   "n": 25,
+   "fair": 138400,
+   "low": 129100,
+   "high": 148400,
+   "seen": true,
+   "fairDealer": 179400,
+   "byStorage": {
+    "128": 138400,
+    "256": 150200
+   },
+   "median": 149990,
+   "min": 89990
+  },
+  "iphone-14-pro-max": {
+   "n": 9,
+   "fair": 145400,
+   "low": 135600,
+   "high": 155900,
+   "seen": true,
+   "fairDealer": 188500,
+   "byStorage": {
+    "128": 145400,
+    "256": 157800
+   },
+   "median": 161495,
+   "min": 110000
+  },
+  "iphone-15": {
+   "n": 0,
+   "fair": 144300,
+   "low": 134600,
+   "high": 154700,
+   "seen": false,
+   "fairDealer": 187000,
+   "byStorage": {
+    "128": 144300
+   }
+  },
+  "iphone-15-plus": {
+   "n": 0,
+   "fair": 148000,
+   "low": 138100,
+   "high": 158700,
+   "seen": false,
+   "fairDealer": 191900,
+   "byStorage": {
+    "128": 148000
+   }
+  },
+  "iphone-15-pro": {
+   "n": 86,
+   "fair": 176100,
+   "low": 164300,
+   "high": 188800,
+   "seen": true,
+   "fairDealer": 228200,
+   "byStorage": {
+    "128": 176100,
+    "256": 191100,
+    "512": 207400
+   },
+   "median": 199999,
+   "min": 120000
+  },
+  "iphone-15-pro-max": {
+   "n": 0,
+   "fair": 197800,
+   "low": 184500,
+   "high": 212100,
+   "seen": false,
+   "fairDealer": 256400,
+   "byStorage": {
+    "256": 197800
+   }
+  },
+  "iphone-16": {
+   "n": 10,
+   "fair": 188800,
+   "low": 176100,
+   "high": 202400,
+   "seen": true,
+   "fairDealer": 244700,
+   "byStorage": {
+    "128": 188800,
+    "256": 204900
+   },
+   "median": 211995,
+   "min": 159999
+  },
+  "iphone-16-plus": {
+   "n": 4,
+   "fair": 192900,
+   "low": 179900,
+   "high": 206800,
+   "seen": true,
+   "fairDealer": 250000,
+   "byStorage": {
+    "128": 192900,
+    "256": 209400
+   },
+   "median": 207500,
+   "min": 180000
+  },
+  "iphone-16-pro": {
+   "n": 13,
+   "fair": 234600,
+   "low": 218800,
+   "high": 251500,
+   "seen": true,
+   "fairDealer": 304100,
+   "byStorage": {
+    "128": 234600,
+    "256": 254600,
+    "512": 276400
+   },
+   "median": 244990,
+   "min": 229999
+  },
+  "iphone-16-pro-max": {
+   "n": 22,
+   "fair": 267100,
+   "low": 249100,
+   "high": 286400,
+   "seen": true,
+   "fairDealer": 346200,
+   "byStorage": {
+    "256": 267100,
+    "512": 289900
+   },
+   "median": 289900,
+   "min": 179990
+  },
+  "iphone-16e": {
+   "n": 3,
+   "fair": 147600,
+   "low": 137700,
+   "high": 158300,
+   "seen": true,
+   "fairDealer": 191400,
+   "byStorage": {
+    "128": 147600
+   },
+   "median": 229990,
+   "min": 169990
+  },
+  "iphone-17": {
+   "n": 11,
+   "fair": 248900,
+   "low": 232200,
+   "high": 266900,
+   "seen": true,
+   "fairDealer": 322600,
+   "byStorage": {
+    "256": 248900,
+    "512": 270200
+   },
+   "median": 315000,
+   "min": 200000
+  },
+  "iphone-17-pro": {
+   "n": 11,
+   "fair": 314000,
+   "low": 292900,
+   "high": 336600,
+   "seen": true,
+   "fairDealer": 407000,
+   "byStorage": {
+    "256": 314000,
+    "512": 340800,
+    "1024": 369800
+   },
+   "median": 410000,
+   "min": 330000
+  },
+  "iphone-17-pro-max": {
+   "n": 17,
+   "fair": 350000,
+   "low": 326500,
+   "high": 375300,
+   "seen": true,
+   "fairDealer": 453700,
+   "byStorage": {
+    "256": 350000,
+    "512": 379900,
+    "1024": 412300
+   },
+   "median": 389999,
+   "min": 309900
+  },
+  "iphone-air": {
+   "n": 7,
+   "fair": 226700,
+   "low": 211500,
+   "high": 243100,
+   "seen": true,
+   "fairDealer": 293800,
+   "byStorage": {
+    "256": 226700
+   },
+   "median": 269990,
+   "min": 155000
+  },
+  "iphone-17e": {
+   "n": 2,
+   "fair": 195300,
+   "low": 182200,
+   "high": 209400,
+   "seen": true,
+   "fairDealer": 253100,
+   "byStorage": {
+    "256": 195300
+   },
+   "median": 239995,
+   "min": 200000
+  },
+  "iphone-18-pro": {
+   "n": 0
+  },
+  "iphone-18-pro-max": {
+   "n": 0
+  },
+  "iphone-duo": {
+   "n": 0
+  },
+  "ipad-6": {
+   "n": 4,
+   "fair": 32200,
+   "low": 30100,
+   "high": 34500,
+   "seen": true,
+   "fairDealer": 34300,
+   "byStorage": {
+    "32": 32200
+   },
+   "median": 34995,
+   "min": 25000
+  },
+  "ipad-7": {
+   "n": 2,
+   "fair": 50800,
+   "low": 47500,
+   "high": 54400,
+   "seen": true,
+   "fairDealer": 54100,
+   "byStorage": {
+    "32": 50800
+   },
+   "median": 53000,
+   "min": 45000
+  },
+  "ipad-8": {
+   "n": 8,
+   "fair": 54200,
+   "low": 50600,
+   "high": 58000,
+   "seen": true,
+   "fairDealer": 57600,
+   "byStorage": {
+    "32": 54200
+   },
+   "median": 49995,
+   "min": 40000
+  },
+  "ipad-9": {
+   "n": 4,
+   "fair": 83600,
+   "low": 78100,
+   "high": 89600,
+   "seen": true,
+   "fairDealer": 89000,
+   "byStorage": {
+    "64": 83600,
+    "256": 92000
+   },
+   "median": 95000,
+   "min": 85000
+  },
+  "ipad-10": {
+   "n": 2,
+   "fair": 104100,
+   "low": 97200,
+   "high": 111500,
+   "seen": true,
+   "fairDealer": 110800,
+   "byStorage": {
+    "64": 104100
+   },
+   "median": 105000,
+   "min": 105000
+  },
+  "ipad-a16": {
+   "n": 18,
+   "fair": 145600,
+   "low": 135900,
+   "high": 155900,
+   "seen": true,
+   "fairDealer": 154800,
+   "byStorage": {
+    "128": 145600,
+    "256": 152700
+   },
+   "median": 167495,
+   "min": 115000
+  },
+  "ipad-air-m1": {
+   "n": 0
+  },
+  "ipad-air-m2": {
+   "n": 0
+  },
+  "ipad-air-m3": {
+   "n": 0
+  },
+  "ipad-air-m4": {
+   "n": 0
+  },
+  "ipad-mini-a17": {
+   "n": 0
+  },
+  "ipad-mini-oled": {
+   "n": 0
+  },
+  "ipad-pro-m4": {
+   "n": 0
+  },
+  "ipad-pro-m5": {
+   "n": 0
+  },
+  "mba-m1": {
+   "n": 10,
+   "fair": 160100,
+   "low": 152100,
+   "high": 168600,
+   "seen": true,
+   "fairDealer": 203100,
+   "byStorage": {
+    "256": 160100,
+    "512": 192000
+   },
+   "median": 157499.5,
+   "min": 135000
+  },
+  "mba-m2": {
+   "n": 2,
+   "fair": 226600,
+   "low": 215200,
+   "high": 238600,
+   "seen": true,
+   "fairDealer": 287400,
+   "byStorage": {
+    "256": 226600,
+    "512": 271700
+   },
+   "median": 309999.5,
+   "min": 239999
+  },
+  "mba-m3": {
+   "n": 5,
+   "fair": 304200,
+   "low": 288900,
+   "high": 320300,
+   "seen": true,
+   "fairDealer": 385900,
+   "byStorage": {
+    "256": 304200,
+    "512": 364800
+   },
+   "median": 309000,
+   "min": 279000
+  },
+  "mba-m4": {
+   "n": 7,
+   "fair": 393800,
+   "low": 374000,
+   "high": 414600,
+   "seen": true,
+   "fairDealer": 499500,
+   "byStorage": {
+    "256": 393800
+   },
+   "median": 380000,
+   "min": 339990
+  },
+  "mba-m5": {
+   "n": 10,
+   "fair": 435200,
+   "low": 413300,
+   "high": 458200,
+   "seen": true,
+   "fairDealer": 552000,
+   "byStorage": {
+    "512": 435200
+   },
+   "median": 474990,
+   "min": 420000
+  },
+  "macbook-neo": {
+   "n": 0
+  },
+  "mbp-m1": {
+   "n": 6,
+   "fair": 302600,
+   "low": 287400,
+   "high": 318600,
+   "seen": true,
+   "fairDealer": 383900,
+   "byStorage": {
+    "512": 302600,
+    "1024": 362800
+   },
+   "median": 434500,
+   "min": 290000
+  },
+  "mbp-m2": {
+   "n": 1,
+   "fair": 414400,
+   "low": 393600,
+   "high": 436400,
+   "seen": true,
+   "fairDealer": 525700,
+   "byStorage": {
+    "512": 414400,
+    "1024": 496900
+   },
+   "median": 770000,
+   "min": 770000
+  },
+  "mbp-m3": {
+   "n": 9,
+   "fair": 383500,
+   "low": 364200,
+   "high": 403800,
+   "seen": true,
+   "fairDealer": 486500,
+   "byStorage": {
+    "512": 383500,
+    "1024": 459800,
+    "2048": 551400
+   },
+   "median": 650000,
+   "min": 300000
+  },
+  "mbp-m4": {
+   "n": 2,
+   "fair": 551200,
+   "low": 523500,
+   "high": 580300,
+   "seen": true,
+   "fairDealer": 699200,
+   "byStorage": {
+    "512": 551200,
+    "1024": 660900
+   },
+   "median": 849995,
+   "min": 599990
+  },
+  "mbp-m5": {
+   "n": 3,
+   "fair": 574800,
+   "low": 545900,
+   "high": 605200,
+   "seen": true,
+   "fairDealer": 729200,
+   "byStorage": {
+    "512": 574800,
+    "1024": 689200
+   },
+   "median": 779990,
+   "min": 779990
+  },
+  "mac-intel": {
+   "n": 9,
+   "fair": 87000,
+   "low": 82700,
+   "high": 91600,
+   "seen": true,
+   "fairDealer": 110400,
+   "byStorage": {
+    "256": 87000,
+    "500": 103700,
+    "512": 104400
+   },
+   "median": 100000,
+   "min": 75000
+  },
+  "watch-s12": {
+   "n": 0
+  },
+  "watch-ultra-4": {
+   "n": 0
+  },
+  "watch-se-3": {
+   "n": 0
+  },
+  "airpods-5": {
+   "n": 0
+  },
+  "airpods-pro-3": {
+   "n": 0
+  },
+  "airpods-max-2": {
+   "n": 0
+  }
+ },
+ "insights": {
+  "iphone": {
+   "dealer": 17.3,
+   "isNew": 29,
+   "batt10": 3.2,
+   "storageDouble": 8.5,
+   "gradeA": 7.1,
+   "perYear": -24.3,
+   "n": 319,
+   "nFit": 300,
+   "sigma": 0.1033
+  },
+  "ipad": {
+   "dealer": 6.9,
+   "isNew": 26.8,
+   "batt10": -10.9,
+   "storageDouble": 4.9,
+   "gradeA": 11.7,
+   "perYear": -13.7,
+   "n": 36,
+   "nFit": 35,
+   "sigma": 0.1016
+  },
+  "mac": {
+   "dealer": 14.6,
+   "isNew": 9,
+   "batt10": -1.2,
+   "storageDouble": 19.9,
+   "gradeA": 12.1,
+   "perYear": -10.3,
+   "n": 64,
+   "nFit": 60,
+   "sigma": 0.0765
+  }
+ },
+ "counts": {
+  "raw": 435,
+  "usable": 424,
+  "skipped": {
+   "noModel": 5,
+   "accessory": 0,
+   "multi": 5,
+   "price": 0,
+   "dup": 1,
+   "defect": 0
+  },
+  "byFamily": {
+   "ipad": 38,
+   "iphone": 322,
+   "mac": 64
+  }
+ },
+ "sources": [
+  {
+   "name": "Apple Magyarország (apple.com/hu)",
+   "date": "2026-11-24"
+  },
+  {
+   "name": "Alza.hu",
+   "date": "2026-11-24"
+  },
+  {
+   "name": "iStyle.hu",
+   "date": "2026-11-24"
+  }
+ ]
+}

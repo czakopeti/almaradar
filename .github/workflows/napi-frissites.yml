@@ -1,0 +1,32 @@
+name: Napi frissítés
+
+on:
+  schedule:
+    - cron: '17 5 * * *'   # minden nap 06:17 (téli idő) / 07:17 (nyári idő)
+  workflow_dispatch: {}     # kézi indítás az Actions fülről
+
+permissions:
+  contents: write
+
+jobs:
+  frissites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Hirdetések begyűjtése
+        run: node pipeline/collect.js
+      - name: Fair-ár modell és adatfájlok
+        run: node pipeline/build.js
+      - name: Oldal összerakása
+        run: node pipeline/site.js
+      - name: Változások mentése
+        run: |
+          git config user.name "almaradar-bot"
+          git config user.email "almaradar-bot@users.noreply.github.com"
+          git add data site
+          git diff --cached --quiet || git commit -m "Napi adatfrissítés $(date -u +%F)"
+          git push
