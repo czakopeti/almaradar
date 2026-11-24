@@ -27,10 +27,19 @@ function normDate(s) {
   return m ? m[0] : SNAP;
 }
 
-// ---- 1. nyers sorok beolvasása (Hardverapró-pillanatképek + gyűjtő JSON-jai) ----
+// ---- 1. nyers sorok beolvasása ----
+// Forrásonként a legfrissebb pillanatkép, amelyben az a forrás megvan (ha egy napi gyűjtés elhasal,
+// a tegnapi adat marad, de a "stale" jelző mutatja).
+const snapDirs = fs.readdirSync(SNAPS).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d) && d <= SNAP).sort().reverse();
+function latestWith(test) {
+  for (const d of snapDirs) { const fsIn = fs.readdirSync(path.join(SNAPS, d)).filter(test); if (fsIn.length) return { day: d, files: fsIn.map(f => path.join(SNAPS, d, f)) }; }
+  return { day: null, files: [] };
+}
+const haSrc = latestWith(f => /^ha_.*\.txt$/.test(f) || f === 'hardverapro.json');
+const shopSrc = latestWith(f => f === 'shops.json');
 const raw = [];
-for (const f of fs.readdirSync(RAW).sort()) {
-  const full = path.join(RAW, f);
+for (const full of haSrc.files) {
+  const f = path.basename(full);
   if (f.endsWith('.txt')) {
     for (const line of fs.readFileSync(full, 'utf8').split('\n')) {
       const parts = line.split(' | ');
@@ -39,7 +48,7 @@ for (const f of fs.readdirSync(RAW).sort()) {
       const u = slug.trim().startsWith('http') ? slug.trim() : `https://hardverapro.hu/apro/${slug.trim()}/friss.html`;
       raw.push({ title: title.trim(), price: parsePrice(priceStr), frozen: /jegelve/.test(priceStr), date: normDate(date), url: u, src: 'hardverapro', file: f });
     }
-  } else if (f.endsWith('.json')) {
+  } else {
     for (const r of JSON.parse(fs.readFileSync(full, 'utf8'))) raw.push(Object.assign({ src: 'hardverapro', file: f }, r, { date: normDate(r.date) }));
   }
 }
@@ -77,6 +86,45 @@ for (const l of listings) {
   l.verdict = l.defect ? 'defect' : verdict(l.dev).key;
 }
 
+// ---- 4b. bolti ajánlatok (új és felújított) ----
+const GRADE = { 'újszerű': 'A', 'kiváló': 'A', 'nagyon jó': 'B', 'jó': 'C' };
+const offerRows = [];
+// Apple saját árai a katalógusból
+const APPLE_URL = { iphone: 'https://www.apple.com/hu/shop/buy-iphone', ipad: 'https://www.apple.com/hu/shop/buy-ipad', mac: 'https://www.apple.com/hu/shop/buy-mac', watch: 'https://www.apple.com/hu/shop/buy-watch', airpods: 'https://www.apple.com/hu/airpods/' };
+for (const m of CAT.models) for (const [st, price] of Object.entries(m.apple || {}))
+  offerRows.push({ shop: 'Apple', kind: 'new', title: m.name, price, url: APPLE_URL[m.family], modelId: m.id, storage: +st || null, official: true });
+for (const full of shopSrc.files) for (const o of JSON.parse(fs.readFileSync(full, 'utf8'))) {
+  const p = parseListing(o.title, { today: TODAY });
+  if (!p.modelId || !CAT.byId[p.modelId] || p.accessory) continue;
+  const m = CAT.byId[p.modelId];
+  offerRows.push({ shop: o.shop, kind: o.kind, title: o.title, price: o.price, oldPrice: o.oldPrice, url: o.url, modelId: p.modelId,
+    storage: p.storage || (m.family === 'mac' ? p.storage : null) || m.base, from: o.from || !p.storage, stock: o.stock,
+    grade: o.grade ? (GRADE[o.grade.toLowerCase()] || null) : null, gradeLabel: o.grade, warrantyMonths: o.warrantyMonths, ram: p.ram, size: p.size, cellular: p.cellular || undefined });
+}
+// boltonként és tárhelyenként a legolcsóbb sor marad (színváltozatok összevonása)
+const bestKey = {};
+for (const o of offerRows) {
+  if (o.cellular) continue;
+  const k = [o.shop, o.kind, o.modelId, o.storage, o.ram || '', o.size || '', o.gradeLabel || ''].join('|');
+  if (!bestKey[k] || o.price < bestKey[k].price) bestKey[k] = o;
+}
+const offers = Object.values(bestKey).sort((a, b) => a.modelId.localeCompare(b.modelId) || (a.storage || 0) - (b.storage || 0) || a.price - b.price);
+
+// árelőzmény boltonként (álakció-figyelőhöz) – 180 nap
+const priceFile = path.join(OUT, 'prices.json');
+let priceHist = {}; try { priceHist = JSON.parse(fs.readFileSync(priceFile, 'utf8')); } catch (e) {}
+priceHist[SNAP] = Object.fromEntries(offers.map(o => [[o.shop, o.modelId, o.storage, o.kind].join('|'), o.price]));
+const keepDays = Object.keys(priceHist).sort().slice(-180);
+priceHist = Object.fromEntries(keepDays.map(d => [d, priceHist[d]]));
+for (const o of offers) {
+  const k = [o.shop, o.modelId, o.storage, o.kind].join('|');
+  const past = keepDays.filter(d => d < SNAP && d >= isoDay(-30)).map(d => priceHist[d][k]).filter(Boolean);
+  if (past.length >= 7) {
+    o.min30 = Math.min(...past);
+    if (o.oldPrice && o.price >= o.min30) o.fakeDiscount = true;   // "akciós", de az elmúlt 30 napban volt ennyi vagy olcsóbb
+  }
+}
+
 // ---- 5. modell-összesítők ----
 function ref(modelId, storage, extra = {}) {
   const m = CAT.byId[modelId];
@@ -99,6 +147,13 @@ for (const m of CAT.models) {
     s.median = median(ls.filter(l => !l.defect).map(l => l.price));
     s.min = Math.min(...ls.map(l => l.price));
   }
+  const mo = offers.filter(o => o.modelId === m.id && o.stock !== 'elfogyott');
+  const pick = (kind, st) => mo.filter(o => o.kind === kind && (st == null || o.storage === st)).sort((a, b) => a.price - b.price)[0];
+  const bn = pick('new', m.base) || pick('new'), br = pick('refurb', m.base) || pick('refurb');
+  if (bn) s.bestNew = { price: bn.price, shop: bn.shop, storage: bn.storage, url: bn.url };
+  if (br) s.bestRefurb = { price: br.price, shop: br.shop, storage: br.storage, url: br.url, from: br.from || undefined };
+  if (m.apple && m.apple[m.base]) s.apple = m.apple[m.base];
+  s.offers = mo.length || undefined;
   models[m.id] = s;
 }
 
@@ -127,11 +182,14 @@ const compact = listings.map((l, i) => ({
   df: l.defect || undefined, bu: l.bundle || undefined, c: l.cellular || undefined, fz: l.frozen || undefined, fair: l.fair, dev: l.dev, v: l.verdict,
 }));
 fs.writeFileSync(path.join(OUT, 'listings.json'), '[\n' + compact.map(x => JSON.stringify(x)).join(',\n') + '\n]\n');
-fs.writeFileSync(path.join(OUT, 'market.json'), JSON.stringify({ snapshot: SNAP, coef, models, insights, counts, sources: CAT.PRICE_SOURCES }, null, 1));
+fs.writeFileSync(path.join(OUT, 'offers.json'), '[\n' + offers.map(o => JSON.stringify(o)).join(',\n') + '\n]\n');
+fs.writeFileSync(priceFile, JSON.stringify(priceHist));
+const shopsSeen = [...new Set(offers.map(o => o.shop))];
+fs.writeFileSync(path.join(OUT, 'market.json'), JSON.stringify({ snapshot: SNAP, sources_day: { hardverapro: haSrc.day, shops: shopSrc.day }, coef, models, insights, counts, shops: shopsSeen, nOffers: offers.length, sources: CAT.PRICE_SOURCES }, null, 1));
 // napi idősor modellenként (későbbi ártrend-grafikonokhoz)
 const histFile = path.join(OUT, 'history.json');
 let hist = {}; try { hist = JSON.parse(fs.readFileSync(histFile, 'utf8')); } catch (e) {}
-hist[SNAP] = Object.fromEntries(Object.entries(models).filter(([, v]) => v.fair && v.n).map(([k, v]) => [k, { fair: v.fair, n: v.n, median: v.median }]));
+hist[SNAP] = Object.fromEntries(Object.entries(models).filter(([, v]) => (v.fair && v.n) || v.bestNew).map(([k, v]) => [k, { fair: v.n ? v.fair : undefined, n: v.n || undefined, median: v.median, bestNew: v.bestNew && v.bestNew.price, bestRefurb: v.bestRefurb && v.bestRefurb.price }]));
 fs.writeFileSync(histFile, JSON.stringify(hist));
-console.log(JSON.stringify(counts));
+console.log(JSON.stringify(counts), 'offers', offers.length, 'shops', [...new Set(offers.map(o => o.shop))].join(','));
 for (const fam of ['iphone', 'ipad', 'mac']) if (coef[fam]) console.log(fam, 'sigma', coef[fam].sigma, 'nFit', coef[fam].nFit, '/', coef[fam].nAll, JSON.stringify(insights[fam]));

@@ -54,15 +54,13 @@
     M('ipad-9', 'ipad', 'iPad (9. gen)', 2021.7, { variant: 'base', base: 64 }),
     M('ipad-10', 'ipad', 'iPad (10. gen)', 2022.8, { variant: 'base', base: 64 }),
     M('ipad-a16', 'ipad', 'iPad (A16, 11. gen)', 2025.2, { variant: 'base', base: 128, sold: true,
-      apple: { 128: 209990, 256: 259990, 512: 359990 }, shop: { 128: [154990, 'Alza'], 256: [199990, 'Alza'] } }),
+      apple: { 128: 209990, 256: 259990, 512: 359990 } }),
     M('ipad-air-m1', 'ipad', 'iPad Air 5 (M1)', 2022.2, { variant: 'air', base: 64 }),
     M('ipad-air-m2', 'ipad', 'iPad Air (M2)', 2024.4, { variant: 'air', base: 128 }),
-    M('ipad-air-m3', 'ipad', 'iPad Air (M3)', 2025.2, { variant: 'air', base: 128,
-      shop: { 128: [259990, 'Alza'] } }),
+    M('ipad-air-m3', 'ipad', 'iPad Air (M3)', 2025.2, { variant: 'air', base: 128 }),
     M('ipad-air-m4', 'ipad', 'iPad Air (M4)', 2026.2, { variant: 'air', base: 128, sold: true,
-      apple: { 128: 349990 }, shop: { 128: [279990, 'Alza'] } }),
-    M('ipad-mini-a17', 'ipad', 'iPad mini (A17 Pro)', 2024.8, { variant: 'mini', base: 128,
-      shop: { 128: [213490, 'Alza'] } }),
+      apple: { 128: 349990 } }),
+    M('ipad-mini-a17', 'ipad', 'iPad mini (A17 Pro)', 2024.8, { variant: 'mini', base: 128 }),
     M('ipad-mini-oled', 'ipad', 'iPad mini (OLED, 2026)', 2026.8, { variant: 'mini', base: 128, sold: true, approx: true,
       apple: { 128: 329990 } }),
     M('ipad-pro-m4', 'ipad', 'iPad Pro (M4)', 2024.4, { variant: 'pro', base: 256 }),
@@ -75,9 +73,8 @@
     M('mba-m3', 'mac', 'MacBook Air M3', 2024.2, { variant: 'air', size: 13, ram: 8, base: 256 }),
     M('mba-m4', 'mac', 'MacBook Air M4', 2025.2, { variant: 'air', size: 13, ram: 16, base: 256 }),
     M('mba-m5', 'mac', 'MacBook Air M5', 2026.2, { variant: 'air', size: 13, ram: 16, base: 512, sold: true, approx: true,
-      apple: { 512: 499990 }, shop: { 512: [465900, 'Alza'] }, note: '13" 16 GB / 512 GB; a 15" 599 990 Ft (Alza: 541 900 Ft)' }),
-    M('macbook-neo', 'mac', 'MacBook Neo (A18 Pro)', 2026.2, { variant: 'neo', size: 13, ram: 8, base: 256, sold: true, approx: true,
-      shop: { 256: [289990, 'iStyle'] }, listPrice: 319990 }),
+      apple: { 512: 499990 }, note: '13" 16 GB / 512 GB; a 15" 599 990 Ft (Alza: 541 900 Ft)' }),
+    M('macbook-neo', 'mac', 'MacBook Neo (A18 Pro)', 2026.2, { variant: 'neo', size: 13, ram: 8, base: 256, sold: true, approx: true }),
     M('mbp-m1', 'mac', 'MacBook Pro M1 / M1 Pro / M1 Max', 2021.8, { variant: 'pro', size: 14, ram: 16, base: 512 }),
     M('mbp-m2', 'mac', 'MacBook Pro M2 / M2 Pro / M2 Max', 2023.1, { variant: 'pro', size: 14, ram: 16, base: 512 }),
     M('mbp-m3', 'mac', 'MacBook Pro M3 / M3 Pro / M3 Max', 2023.85, { variant: 'pro', size: 14, ram: 8, base: 512 }),
@@ -104,8 +101,8 @@
 
   const PRICE_SOURCES = [
     { name: 'Apple Magyarország (apple.com/hu)', date: '2026-11-24' },
-    { name: 'Alza.hu', date: '2026-11-24' },
-    { name: 'iStyle.hu', date: '2026-11-24' },
+    { name: 'Alza, iStyle, iCentre, eMAG, MediaMarkt (új)', date: 'napi' },
+    { name: 'Rejoy, iBerry (felújított, 2 év garancia)', date: 'napi' },
   ];
 
   const FAMILIES = {

@@ -17,8 +17,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Hirdetések begyűjtése
+      - name: Hirdetések begyűjtése (Hardverapró)
         run: node pipeline/collect.js
+        continue-on-error: true   # ha elhasal, a legutóbbi jó adat marad
+      - name: Bolti árak begyűjtése (új és felújított)
+        run: node pipeline/collect_shops.js
+        continue-on-error: true
       - name: Fair-ár modell és adatfájlok
         run: node pipeline/build.js
       - name: Oldal összerakása

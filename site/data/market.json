@@ -1,5 +1,9 @@
 {
  "snapshot": "2026-11-24",
+ "sources_day": {
+  "hardverapro": "2026-11-24",
+  "shops": "2026-11-24"
+ },
  "coef": {
   "today": 2026.898,
   "snapshot": "2026-11-24",
@@ -201,7 +205,15 @@
    "fairDealer": 90100,
    "byStorage": {
     "64": 69500
-   }
+   },
+   "bestRefurb": {
+    "price": 64900,
+    "shop": "iBerry",
+    "storage": 64,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-12/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-12-mini": {
    "n": 0,
@@ -212,7 +224,15 @@
    "fairDealer": 83300,
    "byStorage": {
     "64": 64200
-   }
+   },
+   "bestRefurb": {
+    "price": 59900,
+    "shop": "iBerry",
+    "storage": 64,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-12-mini/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-12-pro": {
    "n": 0,
@@ -223,7 +243,15 @@
    "fairDealer": 112200,
    "byStorage": {
     "128": 86500
-   }
+   },
+   "bestRefurb": {
+    "price": 74900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-12-pro/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-12-pro-max": {
    "n": 0,
@@ -234,7 +262,15 @@
    "fairDealer": 125100,
    "byStorage": {
     "128": 96500
-   }
+   },
+   "bestRefurb": {
+    "price": 89900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-12-pro-max/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-13": {
    "n": 29,
@@ -248,7 +284,15 @@
     "256": 92700
    },
    "median": 98910,
-   "min": 60000
+   "min": 60000,
+   "bestRefurb": {
+    "price": 84900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-13/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-13-mini": {
    "n": 9,
@@ -262,7 +306,15 @@
     "256": 85500
    },
    "median": 85000,
-   "min": 35000
+   "min": 35000,
+   "bestRefurb": {
+    "price": 89900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-13-mini/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-13-pro": {
    "n": 29,
@@ -277,7 +329,15 @@
     "512": 129300
    },
    "median": 129990,
-   "min": 89990
+   "min": 89990,
+   "bestRefurb": {
+    "price": 124900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-13-pro/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-13-pro-max": {
    "n": 15,
@@ -291,7 +351,15 @@
     "256": 129400
    },
    "median": 129990,
-   "min": 80000
+   "min": 80000,
+   "bestRefurb": {
+    "price": 124900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-13-pro-max/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-14": {
    "n": 11,
@@ -305,7 +373,15 @@
     "256": 123300
    },
    "median": 119990,
-   "min": 70000
+   "min": 70000,
+   "bestRefurb": {
+    "price": 114900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-14/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-14-plus": {
    "n": 9,
@@ -319,7 +395,15 @@
     "256": 127800
    },
    "median": 119999,
-   "min": 85000
+   "min": 85000,
+   "bestRefurb": {
+    "price": 124900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-14-plus/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-14-pro": {
    "n": 25,
@@ -333,7 +417,15 @@
     "256": 150200
    },
    "median": 149990,
-   "min": 89990
+   "min": 89990,
+   "bestRefurb": {
+    "price": 149900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-14-pro/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-14-pro-max": {
    "n": 9,
@@ -347,7 +439,15 @@
     "256": 157800
    },
    "median": 161495,
-   "min": 110000
+   "min": 110000,
+   "bestRefurb": {
+    "price": 159900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-14-pro-max/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-15": {
    "n": 0,
@@ -358,7 +458,21 @@
    "fairDealer": 187000,
    "byStorage": {
     "128": 144300
-   }
+   },
+   "bestNew": {
+    "price": 289990,
+    "shop": "iStyle",
+    "storage": 128,
+    "url": "https://istyle.hu/products/iphone-15-mtp03sx-a"
+   },
+   "bestRefurb": {
+    "price": 149900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-15/",
+    "from": true
+   },
+   "offers": 5
   },
   "iphone-15-plus": {
    "n": 0,
@@ -369,7 +483,15 @@
    "fairDealer": 191900,
    "byStorage": {
     "128": 148000
-   }
+   },
+   "bestRefurb": {
+    "price": 164900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-15-plus/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-15-pro": {
    "n": 86,
@@ -384,7 +506,15 @@
     "512": 207400
    },
    "median": 199999,
-   "min": 120000
+   "min": 120000,
+   "bestRefurb": {
+    "price": 194900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-15-pro/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-15-pro-max": {
    "n": 0,
@@ -395,7 +525,15 @@
    "fairDealer": 256400,
    "byStorage": {
     "256": 197800
-   }
+   },
+   "bestRefurb": {
+    "price": 219900,
+    "shop": "iBerry",
+    "storage": 256,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-15-pro-max/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-16": {
    "n": 10,
@@ -409,7 +547,21 @@
     "256": 204900
    },
    "median": 211995,
-   "min": 159999
+   "min": 159999,
+   "bestNew": {
+    "price": 359990,
+    "shop": "iStyle",
+    "storage": 128,
+    "url": "https://istyle.hu/products/iphone-16-myec3hx-a"
+   },
+   "bestRefurb": {
+    "price": 204900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-16/",
+    "from": true
+   },
+   "offers": 6
   },
   "iphone-16-plus": {
    "n": 4,
@@ -423,7 +575,15 @@
     "256": 209400
    },
    "median": 207500,
-   "min": 180000
+   "min": 180000,
+   "bestRefurb": {
+    "price": 224900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-16-plus/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-16-pro": {
    "n": 13,
@@ -438,7 +598,15 @@
     "512": 276400
    },
    "median": 244990,
-   "min": 229999
+   "min": 229999,
+   "bestRefurb": {
+    "price": 249900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-16-pro/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-16-pro-max": {
    "n": 22,
@@ -452,7 +620,15 @@
     "512": 289900
    },
    "median": 289900,
-   "min": 179990
+   "min": 179990,
+   "bestRefurb": {
+    "price": 284900,
+    "shop": "iBerry",
+    "storage": 256,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-16-pro-max/",
+    "from": true
+   },
+   "offers": 1
   },
   "iphone-16e": {
    "n": 3,
@@ -465,7 +641,14 @@
     "128": 147600
    },
    "median": 229990,
-   "min": 169990
+   "min": 169990,
+   "bestNew": {
+    "price": 254990,
+    "shop": "iStyle",
+    "storage": 128,
+    "url": "https://istyle.hu/pages/iphone"
+   },
+   "offers": 1
   },
   "iphone-17": {
    "n": 11,
@@ -479,7 +662,21 @@
     "512": 270200
    },
    "median": 315000,
-   "min": 200000
+   "min": 200000,
+   "bestNew": {
+    "price": 353290,
+    "shop": "Alza",
+    "storage": 256,
+    "url": "https://www.alza.hu/EN/apple-iphone-17-mobile-phones/great-interest/1000242498-e79.htm"
+   },
+   "bestRefurb": {
+    "price": 314990,
+    "shop": "Rejoy",
+    "storage": 256,
+    "url": "https://rejoy.hu/hu/shop/apple/mobiltelefon-apple-iphone-17-256gb-black/75270972/"
+   },
+   "apple": 419990,
+   "offers": 8
   },
   "iphone-17-pro": {
    "n": 11,
@@ -494,7 +691,21 @@
     "1024": 369800
    },
    "median": 410000,
-   "min": 330000
+   "min": 330000,
+   "bestNew": {
+    "price": 434990,
+    "shop": "iStyle",
+    "storage": 256,
+    "url": "https://istyle.hu/products/iphone-17-pro-mg8j4hx-a"
+   },
+   "bestRefurb": {
+    "price": 324900,
+    "shop": "iBerry",
+    "storage": 256,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-17-pro/",
+    "from": true
+   },
+   "offers": 2
   },
   "iphone-17-pro-max": {
    "n": 17,
@@ -509,7 +720,21 @@
     "1024": 412300
    },
    "median": 389999,
-   "min": 309900
+   "min": 309900,
+   "bestNew": {
+    "price": 499990,
+    "shop": "iStyle",
+    "storage": 256,
+    "url": "https://istyle.hu/products/iphone-17-pro-mfyn4hx-a"
+   },
+   "bestRefurb": {
+    "price": 354900,
+    "shop": "iBerry",
+    "storage": 256,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-17-pro-max/",
+    "from": true
+   },
+   "offers": 6
   },
   "iphone-air": {
    "n": 7,
@@ -522,7 +747,22 @@
     "256": 226700
    },
    "median": 269990,
-   "min": 155000
+   "min": 155000,
+   "bestNew": {
+    "price": 364990,
+    "shop": "iStyle",
+    "storage": 256,
+    "url": "https://istyle.hu/products/iphone-air-mg2p4hx-a"
+   },
+   "bestRefurb": {
+    "price": 264900,
+    "shop": "iBerry",
+    "storage": 256,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-air/",
+    "from": true
+   },
+   "apple": 499990,
+   "offers": 5
   },
   "iphone-17e": {
    "n": 2,
@@ -535,16 +775,62 @@
     "256": 195300
    },
    "median": 239995,
-   "min": 200000
+   "min": 200000,
+   "bestNew": {
+    "price": 266590,
+    "shop": "Alza",
+    "storage": 256,
+    "url": "https://www.alza.hu/EN/apple-iphone-17-mobile-phones/great-interest/1000242498-e79.htm"
+   },
+   "apple": 319990,
+   "offers": 7
   },
   "iphone-18-pro": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 549990,
+    "shop": "Apple",
+    "storage": 256,
+    "url": "https://www.apple.com/hu/shop/buy-iphone"
+   },
+   "bestRefurb": {
+    "price": 464900,
+    "shop": "iBerry",
+    "storage": 256,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-18-pro/",
+    "from": true
+   },
+   "apple": 549990,
+   "offers": 6
   },
   "iphone-18-pro-max": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 599990,
+    "shop": "Apple",
+    "storage": 256,
+    "url": "https://www.apple.com/hu/shop/buy-iphone"
+   },
+   "bestRefurb": {
+    "price": 519900,
+    "shop": "iBerry",
+    "storage": 256,
+    "url": "https://iberry.hu/hasznalt-iphone/iphone-18-pro-max/",
+    "from": true
+   },
+   "apple": 599990,
+   "offers": 5
   },
   "iphone-duo": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 899990,
+    "shop": "Apple",
+    "storage": 256,
+    "url": "https://www.apple.com/hu/shop/buy-iphone"
+   },
+   "apple": 899990,
+   "offers": 1
   },
   "ipad-6": {
    "n": 4,
@@ -570,7 +856,15 @@
     "32": 50800
    },
    "median": 53000,
-   "min": 45000
+   "min": 45000,
+   "bestRefurb": {
+    "price": 59900,
+    "shop": "iBerry",
+    "storage": 32,
+    "url": "https://iberry.hu/hasznalt-ipad/ipad-7/",
+    "from": true
+   },
+   "offers": 1
   },
   "ipad-8": {
    "n": 8,
@@ -583,7 +877,15 @@
     "32": 54200
    },
    "median": 49995,
-   "min": 40000
+   "min": 40000,
+   "bestRefurb": {
+    "price": 69900,
+    "shop": "iBerry",
+    "storage": 32,
+    "url": "https://iberry.hu/hasznalt-ipad/ipad-8/",
+    "from": true
+   },
+   "offers": 1
   },
   "ipad-9": {
    "n": 4,
@@ -597,7 +899,15 @@
     "256": 92000
    },
    "median": 95000,
-   "min": 85000
+   "min": 85000,
+   "bestRefurb": {
+    "price": 79900,
+    "shop": "iBerry",
+    "storage": 64,
+    "url": "https://iberry.hu/hasznalt-ipad/ipad-9/",
+    "from": true
+   },
+   "offers": 1
   },
   "ipad-10": {
    "n": 2,
@@ -610,7 +920,15 @@
     "64": 104100
    },
    "median": 105000,
-   "min": 105000
+   "min": 105000,
+   "bestRefurb": {
+    "price": 109900,
+    "shop": "iBerry",
+    "storage": 64,
+    "url": "https://iberry.hu/hasznalt-ipad/ipad-10/",
+    "from": true
+   },
+   "offers": 1
   },
   "ipad-a16": {
    "n": 18,
@@ -624,31 +942,100 @@
     "256": 152700
    },
    "median": 167495,
-   "min": 115000
+   "min": 115000,
+   "bestNew": {
+    "price": 154990,
+    "shop": "Alza",
+    "storage": 128,
+    "url": "https://www.alza.hu/apple-ipad/18851916.htm"
+   },
+   "bestRefurb": {
+    "price": 129900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-ipad/ipad-a16/",
+    "from": true
+   },
+   "apple": 209990,
+   "offers": 6
   },
   "ipad-air-m1": {
-   "n": 0
+   "n": 0,
+   "bestRefurb": {
+    "price": 134900,
+    "shop": "iBerry",
+    "storage": 64,
+    "url": "https://iberry.hu/hasznalt-ipad/ipad-air-5/",
+    "from": true
+   },
+   "offers": 1
   },
   "ipad-air-m2": {
-   "n": 0
+   "n": 0,
+   "bestRefurb": {
+    "price": 179900,
+    "shop": "iBerry",
+    "storage": 128,
+    "url": "https://iberry.hu/hasznalt-ipad/ipad-air-11-m2/",
+    "from": true
+   },
+   "offers": 1
   },
   "ipad-air-m3": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 259990,
+    "shop": "Alza",
+    "storage": 128,
+    "url": "https://www.alza.hu/apple-ipad/18851916.htm"
+   },
+   "offers": 1
   },
   "ipad-air-m4": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 279990,
+    "shop": "Alza",
+    "storage": 128,
+    "url": "https://www.alza.hu/apple-ipad/18851916.htm"
+   },
+   "apple": 349990,
+   "offers": 2
   },
   "ipad-mini-a17": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 213490,
+    "shop": "Alza",
+    "storage": 128,
+    "url": "https://www.alza.hu/apple-ipad/18851916.htm"
+   },
+   "offers": 3
   },
   "ipad-mini-oled": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 329990,
+    "shop": "Apple",
+    "storage": 128,
+    "url": "https://www.apple.com/hu/shop/buy-ipad"
+   },
+   "apple": 329990,
+   "offers": 1
   },
   "ipad-pro-m4": {
    "n": 0
   },
   "ipad-pro-m5": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 549990,
+    "shop": "Apple",
+    "storage": 256,
+    "url": "https://www.apple.com/hu/shop/buy-ipad"
+   },
+   "apple": 549990,
+   "offers": 1
   },
   "mba-m1": {
    "n": 10,
@@ -716,7 +1103,15 @@
     "512": 435200
    },
    "median": 474990,
-   "min": 420000
+   "min": 420000,
+   "bestNew": {
+    "price": 465900,
+    "shop": "Alza",
+    "storage": 512,
+    "url": "https://www.alza.hu/macbook-air-m5/18920950.htm"
+   },
+   "apple": 499990,
+   "offers": 6
   },
   "macbook-neo": {
    "n": 0
@@ -747,7 +1142,15 @@
     "1024": 496900
    },
    "median": 770000,
-   "min": 770000
+   "min": 770000,
+   "bestRefurb": {
+    "price": 279900,
+    "shop": "iBerry",
+    "storage": 512,
+    "url": "https://iberry.hu/hasznalt-macbook/macbook-pro-13-m2-2022/",
+    "from": true
+   },
+   "offers": 1
   },
   "mbp-m3": {
    "n": 9,
@@ -808,22 +1211,64 @@
    "min": 75000
   },
   "watch-s12": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 169990,
+    "shop": "Apple",
+    "storage": null,
+    "url": "https://www.apple.com/hu/shop/buy-watch"
+   },
+   "offers": 1
   },
   "watch-ultra-4": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 349990,
+    "shop": "Apple",
+    "storage": null,
+    "url": "https://www.apple.com/hu/shop/buy-watch"
+   },
+   "offers": 1
   },
   "watch-se-3": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 99990,
+    "shop": "Apple",
+    "storage": null,
+    "url": "https://www.apple.com/hu/shop/buy-watch"
+   },
+   "offers": 1
   },
   "airpods-5": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 57990,
+    "shop": "Apple",
+    "storage": null,
+    "url": "https://www.apple.com/hu/airpods/"
+   },
+   "offers": 1
   },
   "airpods-pro-3": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 99990,
+    "shop": "Apple",
+    "storage": null,
+    "url": "https://www.apple.com/hu/airpods/"
+   },
+   "offers": 1
   },
   "airpods-max-2": {
-   "n": 0
+   "n": 0,
+   "bestNew": {
+    "price": 229990,
+    "shop": "Apple",
+    "storage": null,
+    "url": "https://www.apple.com/hu/airpods/"
+   },
+   "offers": 1
   }
  },
  "insights": {
@@ -878,18 +1323,27 @@
    "mac": 64
   }
  },
+ "shops": [
+  "Apple",
+  "iBerry",
+  "Alza",
+  "Rejoy",
+  "iStyle",
+  "iCentre"
+ ],
+ "nOffers": 115,
  "sources": [
   {
    "name": "Apple Magyarország (apple.com/hu)",
    "date": "2026-11-24"
   },
   {
-   "name": "Alza.hu",
-   "date": "2026-11-24"
+   "name": "Alza, iStyle, iCentre, eMAG, MediaMarkt (új)",
+   "date": "napi"
   },
   {
-   "name": "iStyle.hu",
-   "date": "2026-11-24"
+   "name": "Rejoy, iBerry (felújított, 2 év garancia)",
+   "date": "napi"
   }
  ]
 }
